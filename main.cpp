@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-//sprawdzenie czy plik istnieje
-//zadanie moze nie miec rozwiazania. While powinien działac dopuki openset != NULL, a wewnatrz powinien byc if porownujacy tablice z rozwiazaniem;
+//Potem dodam sprawdzanie inputBoard.txt dziala czy moze go nie ma
+//Zadanie moze nie miec rozwiazania. While powinien działac dopuki openset != NULL, a wewnatrz bedzie if porownujacy tablice z rozwiazaniem;
 
 struct bond
 {
@@ -23,11 +23,13 @@ int module (int number)
 int h (int board[][3])
 {
     int h = 0;
+    //chyba nie powiniennem liczyc plytki numer 9. Kiedys to sprawdze
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
         {
             int m = (board[i][j]-1)/3;
             int n = (board[i][j]%3)-1;
+            if (n<0)    n += 3;
             h += (module(m-i) + module(n-j));
         }
     return h;
