@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 
 //Potem dodam sprawdzanie czy inputBoard.txt dziala czy moze go nie ma
@@ -7,32 +8,32 @@ using namespace std;
 //Będę musiał jakoś podzielić program na moduły
 //Na koniec musi znajdować droge
 
-struct bond
+struct Node
 {
     int g, f;
     int board[3][3];
     int id;
-    bond *parent;
-    bond *next;
+    Node *parent;
+    Node *next;
 };
 
 int h (int board[][3]);
-int module (int number);
 int id (int board[][3]);
 void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x);
-void newBond (bond *openset, int fRating, int board[][3], int idRating);
-bool notHere (bond *fresh, bond *topic);
-void transferToClosedset (bond *&closedset, bond *openset);
-bool alreadyInside (bond *head, int id);
-bond *reconstructPath (bond *openset);
-void extermination (bond *&head);
+void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating);
+bool notHere (Node *fresh, Node *topic);
+void transferToClosedset (Node *&closedset, Node *openset);
+bool alreadyInside (Node *head, int id);
+Node *reconstructPath (Node *openset);
+void extermination (Node *&head);
+void printSteps (Node *current);
 
 int main()
 {
-    bond *openset = NULL;
-    bond *closedset = NULL;
+    Node *openset = NULL;
+    Node *closedset = NULL;
 
-    openset = new bond;
+    openset = new Node;
 
     ifstream input ("inputBoard.txt");
     for (int i=0; i<3; i++)
@@ -57,6 +58,7 @@ int main()
     int fRating, idRating;
     while (openset->id != goal)
     {
+        transferToClosedset(closedset, openset);
         for (int i=0; i<3; i++)
             for (int j=0; j<3; j++)
                 if (openset->board[i][j] == 9)
@@ -72,8 +74,8 @@ int main()
             idRating = id(copy_up);
             if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
             {
-                    fRating = openset->g + 1 + h(copy_up);
-                    newBond (openset, fRating, copy_up, idRating);
+                fRating = openset->g + 1 + h(copy_up);
+                newNode (openset, closedset, fRating, copy_up, idRating);
             }
         }
         if (luka_y != 2)
@@ -83,7 +85,7 @@ int main()
             if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
             {
                 fRating = openset->g + 1 + h(copy_down);
-                newBond (openset, fRating, copy_down, idRating);
+                newNode (openset, closedset, fRating, copy_down, idRating);
             }
         }
         if (luka_x != 0)
@@ -93,7 +95,7 @@ int main()
             if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
             {
                 fRating = openset->g + 1 + h(copy_left);
-                newBond (openset, fRating, copy_left, idRating);
+                newNode (openset, closedset, fRating, copy_left, idRating);
             }
         }
         if (luka_x != 2)
@@ -103,20 +105,19 @@ int main()
             if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
             {
                 fRating = openset->g + 1 + h(copy_right);
-                newBond (openset, fRating, copy_right, idRating);
+                newNode (openset, closedset, fRating, copy_right, idRating);
             }
         }
 
-        transferToClosedset(closedset, openset);
-        bond *temporary = openset;
+        Node *temporary = openset;
         openset = openset->next;
         delete temporary;
     }
 
-    //bond *start = reconstructPath(openset);
+    Node *start = reconstructPath(openset);
     extermination(openset);
     extermination(closedset);
-
+    printSteps(start);
     return 0;
 }
 
@@ -132,16 +133,9 @@ int h (int board[][3])
             int m = (board[i][j]-1)/3;
             int n = (board[i][j]%3)-1;
             if (n<0)    n += 3;
-            h += (module(m-i) + module(n-j));
+            h += abs(m-i) + abs(n-j);
         }
     return h;
-}
-
-int module (int number)
-{
-    if (number < 0)
-        number = (-number);
-    return number;
 }
 
 int id (int board[][3])
@@ -168,26 +162,26 @@ void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y
     copy[obok_y][obok_x] = bufor;
 }
 
-void newBond (bond *openset, int fRating, int board[][3], int idRating)
+void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating)
 {
-    bond *fresh = new bond;
-    fresh->g = openset->g+1;
+    Node *fresh = new Node;
+    fresh->g = parent->g+1;
     fresh->f = fRating;
 
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
             fresh->board[i][j] = board[i][j];
     fresh->id = idRating;
-    fresh->parent = openset;
+    fresh->parent = parent;
 
-    bond *topic = openset;
+    Node *topic = openset;
     while (notHere(fresh, topic))
         topic = topic->next;
     fresh->next = topic->next;
     topic->next = fresh;
 }
 
-bool notHere (bond *fresh, bond *topic)
+bool notHere (Node *fresh, Node *topic)
 {
     if (topic->next == NULL)
         return false;
@@ -196,15 +190,15 @@ bool notHere (bond *fresh, bond *topic)
     return false;
 }
 
-void transferToClosedset (bond *&closedset, bond *openset)
+void transferToClosedset (Node *&closedset, Node *openset)
 {
-    bond *anew = new bond;
+    Node *anew = new Node;
     *anew = *openset;
     anew->next = closedset;
     closedset = anew;
 }
 
-bool alreadyInside (bond *head, int id)
+bool alreadyInside (Node *head, int id)
 {
     while (head != NULL)
     {
@@ -215,15 +209,15 @@ bool alreadyInside (bond *head, int id)
     return false;
 }
 
-bond *reconstructPath (bond *openset)
+Node *reconstructPath (Node *openset)
 {
-    bond *head = new bond;
+    Node *head = new Node;
     *head = *openset;
     head->next = NULL;
 
     while (head->parent != NULL)
     {
-        bond *current = new bond;
+        Node *current = new Node;
         *current = *(head->parent);
         current ->next = head;
         head = current;
@@ -231,14 +225,32 @@ bond *reconstructPath (bond *openset)
     return head;
 }
 
-void extermination (bond *&head)
+void extermination (Node *&head)
 {
-    bond *topic = head;
+    Node *topic = head;
     while (topic != NULL)
     {
-        bond *temporary = topic;
+        Node *temporary = topic;
         topic = topic->next;
         delete temporary;
     }
     head = NULL;
+}
+
+void printSteps (Node *current)
+{
+    while (current != NULL)
+    {
+        for (int i=0; i<3; i++)
+        {
+            for (int j=0; j<3; j++)
+                if (current->board[i][j] == 9)
+                    cout <<"  ";
+                else
+                    cout <<current->board[i][j] <<" ";
+            cout <<endl;
+        }
+        cout <<endl;
+        current = current->next;
+    }
 }
