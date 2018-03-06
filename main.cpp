@@ -1,12 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <stdlib.h>
+#include <windows.h>
 using namespace std;
 
-//Potem dodam sprawdzanie czy inputBoard.txt dziala czy moze go nie ma
-//Zadanie moze nie miec rozwiazania. While powinien działac dopuki openset != NULL, a wewnatrz bedzie if porownujacy tablice z rozwiazaniem
-//Będę musiał jakoś podzielić program na moduły
-//Na koniec musi znajdować droge
+//Będę musiał podzielić program na moduły
+//Gdy nie znajdzie inputBoard.txt moze poprosic uzytkownika o dane wejsciowe z konsoli
+//Zadanie moze nie miec rozwiazania. Na poczatku bedzie sprawdzenie parzystosci permutacji
+//Sprawdzę czy warto sprawdzać, czy nowa droga jest krótsza, gdy trafie na wezel ktory juz znam
 
 struct Node
 {
@@ -241,6 +243,7 @@ void printSteps (Node *current)
 {
     while (current != NULL)
     {
+        system("cls");
         for (int i=0; i<3; i++)
         {
             for (int j=0; j<3; j++)
@@ -250,7 +253,7 @@ void printSteps (Node *current)
                     cout <<current->board[i][j] <<" ";
             cout <<endl;
         }
-        cout <<endl;
+        Sleep(500);
         current = current->next;
     }
 }
