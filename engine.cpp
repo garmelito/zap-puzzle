@@ -2,6 +2,19 @@
 
 #include <cmath>
 
+int id (int board[][3])
+{
+    int suma = 0;
+    int waga = 100000000;
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+        {
+            suma += board[i][j] * waga;
+            waga /= 10;
+        }
+    return suma;
+}
+
 int h (int board[][3])
 {
     int h = 0;
@@ -17,17 +30,12 @@ int h (int board[][3])
     return h;
 }
 
-int id (int board[][3])
+void transferToClosedset (Node *&closedset, Node *openset)
 {
-    int suma = 0;
-    int waga = 100000000;
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-        {
-            suma += board[i][j] * waga;
-            waga /= 10;
-        }
-    return suma;
+    Node *anew = new Node;
+    *anew = *openset;
+    anew->next = closedset;
+    closedset = anew;
 }
 
 void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x)
@@ -39,6 +47,26 @@ void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y
     int bufor = copy[luka_y][luka_x];
     copy[luka_y][luka_x] = copy[obok_y][obok_x];
     copy[obok_y][obok_x] = bufor;
+}
+
+bool alreadyInside (Node *head, int id)
+{
+    while (head != nullptr)
+    {
+        if (head->id == id)
+            return true;
+        head = head->next;
+    }
+    return false;
+}
+
+bool notHere (Node *fresh, Node *topic)
+{
+    if (topic->next == nullptr)
+        return false;
+    if (fresh->f > topic->next->f)
+        return true;
+    return false;
 }
 
 void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating)
@@ -60,32 +88,15 @@ void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRa
     topic->next = fresh;
 }
 
-bool notHere (Node *fresh, Node *topic)
+void moveMaker (Node *openset, Node *closedset, int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x)
 {
-    if (topic->next == nullptr)
-        return false;
-    if (fresh->f > topic->next->f)
-        return true;
-    return false;
-}
-
-void transferToClosedset (Node *&closedset, Node *openset)
-{
-    Node *anew = new Node;
-    *anew = *openset;
-    anew->next = closedset;
-    closedset = anew;
-}
-
-bool alreadyInside (Node *head, int id)
-{
-    while (head != nullptr)
+    newBoard(openset->board, copy, luka_y, luka_x, obok_y, obok_x);
+    int idRating = id(copy);
+    if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
     {
-        if (head->id == id)
-            return true;
-        head = head->next;
+        int fRating = openset->g + 1 + h(copy);
+        newNode (openset, closedset, fRating, copy, idRating);
     }
-    return false;
 }
 
 Node *reconstructPath (Node *openset)

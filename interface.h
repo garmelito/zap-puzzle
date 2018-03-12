@@ -3,7 +3,7 @@
 
 #include "node.h"
 
-void printSteps (Node *current);
 void readFromFile (Node *openset);
+void printSteps (Node *current);
 
 #endif // INTERFACE_H

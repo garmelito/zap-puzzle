@@ -33,7 +33,7 @@ int main()
     int copy_down[3][3];
     int copy_left[3][3];
     int copy_right[3][3];
-    int fRating, idRating;
+
     while (openset->id != goal)
     {
         transferToClosedset(closedset, openset);
@@ -47,45 +47,13 @@ int main()
                 }
 
         if (luka_y != 0)
-        {
-            newBoard(openset->board, copy_up, luka_y, luka_x, luka_y-1, luka_x);
-            idRating = id(copy_up);
-            if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
-            {
-                fRating = openset->g + 1 + h(copy_up);
-                newNode (openset, closedset, fRating, copy_up, idRating);
-            }
-        }
+            moveMaker (openset, closedset, copy_up, luka_y, luka_x, luka_y-1, luka_x);
         if (luka_y != 2)
-        {
-            newBoard(openset->board, copy_down, luka_y, luka_x, luka_y+1, luka_x);
-            idRating = id(copy_down);
-            if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
-            {
-                fRating = openset->g + 1 + h(copy_down);
-                newNode (openset, closedset, fRating, copy_down, idRating);
-            }
-        }
+            moveMaker (openset, closedset, copy_down, luka_y, luka_x, luka_y+1, luka_x);
         if (luka_x != 0)
-        {
-            newBoard(openset->board, copy_left, luka_y, luka_x, luka_y, luka_x-1);
-            idRating = id(copy_left);
-            if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
-            {
-                fRating = openset->g + 1 + h(copy_left);
-                newNode (openset, closedset, fRating, copy_left, idRating);
-            }
-        }
+            moveMaker (openset, closedset, copy_left, luka_y, luka_x, luka_y, luka_x-1);
         if (luka_x != 2)
-        {
-            newBoard(openset->board, copy_right, luka_y, luka_x, luka_y, luka_x+1);
-            idRating = id(copy_right);
-            if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
-            {
-                fRating = openset->g + 1 + h(copy_right);
-                newNode (openset, closedset, fRating, copy_right, idRating);
-            }
-        }
+            moveMaker (openset, closedset, copy_right, luka_y, luka_x, luka_y, luka_x+1);
 
         Node *temporary = openset;
         openset = openset->next;

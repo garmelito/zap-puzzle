@@ -6,6 +6,15 @@
 
 using namespace std;
 
+void readFromFile (Node *openset)
+{
+    ifstream input ("inputBoard.txt");
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+            input >>openset->board[i][j];
+    input.close();
+}
+
 void printSteps (Node *current)
 {
     while (current != nullptr)
@@ -20,16 +29,7 @@ void printSteps (Node *current)
                     cout <<current->board[i][j] <<" ";
             cout <<endl;
         }
-        Sleep(380);
+        Sleep(480);
         current = current->next;
     }
-}
-
-void readFromFile (Node *openset)
-{
-    ifstream input ("inputBoard.txt");
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-            input >>openset->board[i][j];
-    input.close();
 }
