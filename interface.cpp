@@ -1,18 +1,31 @@
 #include "interface.h"
 
+#include <fstream>
 #include <iostream>
 #include <windows.h>
-#include <fstream>
 
 using namespace std;
 
-void readFromFile (Node *openset)
+void readFromFile (int board[][3])
 {
     ifstream input ("inputBoard.txt");
+    if (input)
+    {
+        for (int i=0; i<3; i++)
+            for (int j=0; j<3; j++)
+                input >>board[i][j];
+        input.close();
+    }
+    else
+        readFromConsole (board);
+}
+
+void readFromConsole (int board[][3])
+{
+    cout <<"Nie odnalazlem pliku lub mial bledne dane wejsciowe. Podaj PESEL \n";
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
-            input >>openset->board[i][j];
-    input.close();
+            cin >>board[i][j];
 }
 
 void printSteps (Node *current)
@@ -20,6 +33,7 @@ void printSteps (Node *current)
     while (current != nullptr)
     {
         system("cls");
+        //cout <<endl;
         for (int i=0; i<3; i++)
         {
             for (int j=0; j<3; j++)

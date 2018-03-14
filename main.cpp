@@ -6,8 +6,7 @@
 
 using namespace std;
 
-//Gdy nie znajdzie inputBoard.txt moze poprosic uzytkownika o dane wejsciowe z konsoli
-//Zadanie moze nie miec rozwiazania. Na poczatku bedzie sprawdzenie parzystosci permutacji
+//Moge dodac sprawdzenie czy wprowadzone dane sa poprawne
 
 int main()
 {
@@ -16,7 +15,9 @@ int main()
 
     openset = new Node;
 
-    readFromFile (openset);
+    readFromFile (openset->board);
+    while (!(solutionIsPosible(openset->board)))
+        readFromConsole(openset->board);
 
     openset->id = id(openset->board);
 

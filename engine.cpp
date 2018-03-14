@@ -2,6 +2,33 @@
 
 #include <cmath>
 
+bool solutionIsPosible (int board[3][3])
+{
+    int permutationInversions = 0;
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+        {
+            if (board[i][j] == 9)
+                permutationInversions += i + 1;
+            else
+            {
+                for (int l=j; l<3; l++)
+                    if (board[i][l] < board[i][j])
+                        permutationInversions ++;
+                for (int k=i+1; k<3; k++)
+                    for (int l=0; l<3; l++)
+                        if (board[k][l] < board[i][j])
+                            permutationInversions ++;
+
+            }
+        }
+
+    if (permutationInversions % 2 != 0)
+        return true;
+    else
+        return false;
+}
+
 int id (int board[][3])
 {
     int suma = 0;

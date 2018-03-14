@@ -3,7 +3,8 @@
 
 #include "node.h"
 
-void readFromFile (Node *openset);
+void readFromFile (int board[][3]);
+void readFromConsole (int board[][3]);
 void printSteps (Node *current);
 
 #endif // INTERFACE_H
