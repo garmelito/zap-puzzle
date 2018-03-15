@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-bool solutionIsPosible (int board[3][3])
+bool solutionIsPosible (int board[][3])
 {
     int permutationInversions = 0;
     for (int i=0; i<3; i++)
@@ -19,14 +19,25 @@ bool solutionIsPosible (int board[3][3])
                     for (int l=0; l<3; l++)
                         if (board[k][l] < board[i][j])
                             permutationInversions ++;
-
             }
         }
 
     if (permutationInversions % 2 != 0)
         return true;
-    else
-        return false;
+    return false;
+}
+
+bool inRules (int board[][3])
+{
+    bool seen[9];
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+            seen[board[i][j]-1] = true;
+
+    for (int i=0; i<9; i++)
+        if (seen[i] == false)
+            return false;
+    return true;
 }
 
 int id (int board[][3])

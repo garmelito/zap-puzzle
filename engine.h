@@ -3,7 +3,8 @@
 
 #include "node.h"
 
-bool solutionIsPosible (int board[3][3]);
+bool solutionIsPosible (int board[][3]);
+bool inRules (int board[][3]);
 int id (int board[][3]);
 int h (int board[][3]);
 

@@ -3,20 +3,20 @@
 #include "interface.h"
 
 #include <iostream>
+//#include <ctime>
 
 using namespace std;
 
-//Moge dodac sprawdzenie czy wprowadzone dane sa poprawne
-
 int main()
 {
+    //clock_t beginning = clock();
     Node *openset = nullptr;
     Node *closedset = nullptr;
 
     openset = new Node;
 
     readFromFile (openset->board);
-    while (!(solutionIsPosible(openset->board)))
+    while (!(solutionIsPosible(openset->board) && inRules(openset->board)))
         readFromConsole(openset->board);
 
     openset->id = id(openset->board);
@@ -64,6 +64,13 @@ int main()
     Node *start = reconstructPath(openset);
     extermination(openset);
     extermination(closedset);
+
+    /*clock_t finish = clock();
+    double duration = double(finish - beginning)/CLOCKS_PER_SEC;
+    cout <<duration;
+    system("pause");*/
+
     printSteps(start);
+    extermination(start);
     return 0;
 }

@@ -22,7 +22,7 @@ void readFromFile (int board[][3])
 
 void readFromConsole (int board[][3])
 {
-    cout <<"Nie odnalazlem pliku lub mial bledne dane wejsciowe. Podaj PESEL \n";
+    cout <<"Nie odnalazlem pliku lub mial bledne dane wejsciowe. Podaj nowe \n";
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
             cin >>board[i][j];
