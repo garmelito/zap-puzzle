@@ -40,6 +40,7 @@ bool inRules (int board[][3])
     return true;
 }
 
+//zwraca identyfikator
 int id (int board[][3])
 {
     int suma = 0;
@@ -53,21 +54,23 @@ int id (int board[][3])
     return suma;
 }
 
+//zwraca optymistyczna dlugosc sciezki do celu
 int h (int board[][3])
 {
     int h = 0;
-    //chyba nie powiniennem liczyc plytki numer 9. Kiedys to sprawdze
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
         {
-            int m = (board[i][j]-1)/3;
-            int n = (board[i][j]%3)-1;
+            //sumuje odleglosc kazdego elementu od swojego polozenia
+            int m = (board[i][j]-1)/3;  //wspolrzedna y wlasciwego polozenia
+            int n = (board[i][j]%3)-1;  //wspolrzedna x wlasciwego polozenia
             if (n<0)    n += 3;
-            h += abs(m-i) + abs(n-j);
+            h += abs(m-i) + abs(n-j);   //odleglosc aktualnego polozenia od wlasciwego
         }
     return h;
 }
 
+//kopiuje element do listy elementow odwiedzonych. Towrzy tam NOWY element ktoremu przepisuje wartosci
 void transferToClosedset (Node *&closedset, Node *openset)
 {
     Node *anew = new Node;
@@ -76,6 +79,7 @@ void transferToClosedset (Node *&closedset, Node *openset)
     closedset = anew;
 }
 
+//tworzy nowa tablice w ktorej na miejsce luki (9) wchodzi plytka obok
 void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x)
 {
     for (int i=0; i<3; i++)
@@ -87,6 +91,7 @@ void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y
     copy[obok_y][obok_x] = bufor;
 }
 
+//sprawdza czy element juz jest w danej liscie
 bool alreadyInside (Node *head, int id)
 {
     while (head != nullptr)
@@ -98,6 +103,7 @@ bool alreadyInside (Node *head, int id)
     return false;
 }
 
+//wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po f
 bool notHere (Node *fresh, Node *topic)
 {
     if (topic->next == nullptr)
@@ -107,6 +113,7 @@ bool notHere (Node *fresh, Node *topic)
     return false;
 }
 
+//tworzy nowy wezel do liscie dostepnych
 void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating)
 {
     Node *fresh = new Node;
@@ -126,6 +133,7 @@ void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRa
     topic->next = fresh;
 }
 
+//Umieszcza nowe elementy na liscie dostepnych mozliwosci
 void moveMaker (Node *openset, Node *closedset, int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x)
 {
     newBoard(openset->board, copy, luka_y, luka_x, obok_y, obok_x);

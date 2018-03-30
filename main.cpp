@@ -27,7 +27,7 @@ int main()
     openset->parent = nullptr;
     openset->next = nullptr;
 
-    int goal = 123456789;
+    int goal = 123456789;   //id ulozenia ktore jest rozwiazaniem
     int luka_y;
     int luka_x;
     int copy_up[3][3];
@@ -37,7 +37,7 @@ int main()
 
     while (openset->id != goal)
     {
-        transferToClosedset(closedset, openset);
+        transferToClosedset(closedset, openset);    //kopiuje element ktorym sie teraz zajmuje do listy elementow odwiedzonych
         for (int i=0; i<3; i++)
             for (int j=0; j<3; j++)
                 if (openset->board[i][j] == 9)
@@ -46,7 +46,7 @@ int main()
                     luka_x = j;
                     break;
                 }
-
+        //sprawdza czy nie stoi przy danej krawedzi, a potem, jezeli moze, wykonuje ruch
         if (luka_y != 0)
             moveMaker (openset, closedset, copy_up, luka_y, luka_x, luka_y-1, luka_x);
         if (luka_y != 2)
@@ -56,6 +56,7 @@ int main()
         if (luka_x != 2)
             moveMaker (openset, closedset, copy_right, luka_y, luka_x, luka_y, luka_x+1);
 
+        //usuwa element ktorym sie aktualnie zajmowal. Juz przepisal go do listy elementow odwiedzonych
         Node *temporary = openset;
         openset = openset->next;
         delete temporary;
