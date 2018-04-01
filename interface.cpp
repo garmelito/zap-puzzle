@@ -33,16 +33,7 @@ void printSteps (Node *current)
     while (current != nullptr)
     {
         system("cls");
-        //cout <<endl;
-        for (int i=0; i<3; i++)
-        {
-            for (int j=0; j<3; j++)
-                if (current->board[i][j] == 9)
-                    cout <<"  ";
-                else
-                    cout <<current->board[i][j] <<" ";
-            cout <<endl;
-        }
+        current->board.print();
         Sleep(480);
         current = current->next;
     }

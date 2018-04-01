@@ -5,9 +5,13 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     engine.cpp \
-    interface.cpp
+    interface.cpp \
+    board.cpp \
+    node.cpp
 
 HEADERS += \
     node.h \
     engine.h \
-    interface.h
+    interface.h \
+    board.h \
+    point.h

@@ -2,21 +2,19 @@
 #define ENGINE_H
 
 #include "node.h"
+#include "point.h"
 
-bool solutionIsPosible (int board[][3]);
-bool inRules (int board[][3]);
-int id (int board[][3]);
-int h (int board[][3]);
+bool solutionIsPosible(int matrix[][3]);
+bool inRules(int matrix[][3]);
 
 void transferToClosedset (Node *&closedset, Node *openset);
-void moveMaker (Node *openset, Node *closedset, int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x);
+void moveMaker (Node *openset, Node *closedset, Point luka, int obok_y, int obok_x);
 
 Node *reconstructPath (Node *openset);
 void extermination (Node *&head);
 
 //potrzebne tylko do dzialania funkcji
-/*void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x);
-bool alreadyInside (Node *head, int id);
+/*bool alreadyInside (Node *head, int id);
 void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating);
 bool notHere (Node *fresh, Node *topic);*/
 

@@ -2,22 +2,22 @@
 
 #include <cmath>
 
-bool solutionIsPosible (int board[][3])
+bool solutionIsPosible(int matrix[][3])
 {
     int permutationInversions = 0;
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
         {
-            if (board[i][j] == 9)
+            if (matrix[i][j] == 9)
                 permutationInversions += i + 1;
             else
             {
                 for (int l=j; l<3; l++)
-                    if (board[i][l] < board[i][j])
+                    if (matrix[i][l] < matrix[i][j])
                         permutationInversions ++;
                 for (int k=i+1; k<3; k++)
                     for (int l=0; l<3; l++)
-                        if (board[k][l] < board[i][j])
+                        if (matrix[k][l] < matrix[i][j])
                             permutationInversions ++;
             }
         }
@@ -27,12 +27,12 @@ bool solutionIsPosible (int board[][3])
     return false;
 }
 
-bool inRules (int board[][3])
+bool inRules(int matrix[][3])
 {
     bool seen[9];
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
-            seen[board[i][j]-1] = true;
+            seen[matrix[i][j]-1] = true;
 
     for (int i=0; i<9; i++)
         if (seen[i] == false)
@@ -40,55 +40,13 @@ bool inRules (int board[][3])
     return true;
 }
 
-//zwraca identyfikator
-int id (int board[][3])
-{
-    int suma = 0;
-    int waga = 100000000;
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-        {
-            suma += board[i][j] * waga;
-            waga /= 10;
-        }
-    return suma;
-}
-
-//zwraca optymistyczna dlugosc sciezki do celu
-int h (int board[][3])
-{
-    int h = 0;
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-        {
-            //sumuje odleglosc kazdego elementu od swojego polozenia
-            int m = (board[i][j]-1)/3;  //wspolrzedna y wlasciwego polozenia
-            int n = (board[i][j]%3)-1;  //wspolrzedna x wlasciwego polozenia
-            if (n<0)    n += 3;
-            h += abs(m-i) + abs(n-j);   //odleglosc aktualnego polozenia od wlasciwego
-        }
-    return h;
-}
-
 //kopiuje element do listy elementow odwiedzonych. Towrzy tam NOWY element ktoremu przepisuje wartosci
 void transferToClosedset (Node *&closedset, Node *openset)
 {
-    Node *anew = new Node;
+    Node *anew = new Node(openset->board);
     *anew = *openset;
     anew->next = closedset;
     closedset = anew;
-}
-
-//tworzy nowa tablice w ktorej na miejsce luki (9) wchodzi plytka obok
-void newBoard (int board[][3], int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x)
-{
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-            copy[i][j] = board[i][j];
-
-    int bufor = copy[luka_y][luka_x];
-    copy[luka_y][luka_x] = copy[obok_y][obok_x];
-    copy[obok_y][obok_x] = bufor;
 }
 
 //sprawdza czy element juz jest w danej liscie
@@ -96,7 +54,7 @@ bool alreadyInside (Node *head, int id)
 {
     while (head != nullptr)
     {
-        if (head->id == id)
+        if (head->board.getId() == id)
             return true;
         head = head->next;
     }
@@ -104,56 +62,50 @@ bool alreadyInside (Node *head, int id)
 }
 
 //wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po f
-bool notHere (Node *fresh, Node *topic)
+bool notHere (Node *fresh, Node *looking)
 {
-    if (topic->next == nullptr)
+    if (looking->next == nullptr)
         return false;
-    if (fresh->f > topic->next->f)
+    if (fresh->f > looking->next->f)
         return true;
     return false;
 }
 
 //tworzy nowy wezel do liscie dostepnych
-void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating)
+void newNode (Node *openset, Node *parent, int fRating, Board board)
 {
-    Node *fresh = new Node;
+    Node *fresh = new Node(board);
     fresh->g = parent->g+1;
-    fresh->f = fRating;
-
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-            fresh->board[i][j] = board[i][j];
-    fresh->id = idRating;
+    fresh->f = fRating; //chyba moglbym wyliczac z parent->g + 1 + board.predictDistanceLeft()
     fresh->parent = parent;
 
-    Node *topic = openset;
-    while (notHere(fresh, topic))
-        topic = topic->next;
-    fresh->next = topic->next;
-    topic->next = fresh;
+    Node *looking = openset;
+    while (notHere(fresh, looking))
+        looking = looking->next;
+    fresh->next = looking->next;
+    looking->next = fresh;
 }
 
 //Umieszcza nowe elementy na liscie dostepnych mozliwosci
-void moveMaker (Node *openset, Node *closedset, int copy[][3], int luka_y, int luka_x, int obok_y, int obok_x)
+void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_x)
 {
-    newBoard(openset->board, copy, luka_y, luka_x, obok_y, obok_x);
-    int idRating = id(copy);
-    if (!(alreadyInside(openset, idRating) || alreadyInside(closedset, idRating)))
+    Board environment = openset->board.clone(luka, obok_y, obok_x);
+    if (!(alreadyInside(openset, environment.getId()) || alreadyInside(closedset, environment.getId())))
     {
-        int fRating = openset->g + 1 + h(copy);
-        newNode (openset, closedset, fRating, copy, idRating);
+        int fRating = openset->g + 1 + environment.getPredictedDistance();
+        newNode (openset, closedset, fRating, environment);
     }
 }
 
 Node *reconstructPath (Node *openset)
 {
-    Node *head = new Node;
+    Node *head = new Node(openset->board);
     *head = *openset;
     head->next = nullptr;
 
     while (head->parent != nullptr)
     {
-        Node *current = new Node;
+        Node *current = new Node(head->parent->board);
         *current = *(head->parent);
         current ->next = head;
         head = current;

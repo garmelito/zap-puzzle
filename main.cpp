@@ -1,11 +1,15 @@
-#include "node.h"
-#include "engine.h"
+#include "board.h"  //zawiera "point.h"
+#include "engine.h" //engine.h i interface.h zawieraja "node.h"
 #include "interface.h"
+#include "node.h"
 
 #include <iostream>
 //#include <ctime>
 
 using namespace std;
+
+//board aka environment
+//matrix is filled with numbers
 
 int main()
 {
@@ -13,48 +17,40 @@ int main()
     Node *openset = nullptr;
     Node *closedset = nullptr;
 
-    openset = new Node;
+    int initialMatrix[3][3];
+    readFromFile (initialMatrix);
 
-    readFromFile (openset->board);
-    while (!(solutionIsPosible(openset->board) && inRules(openset->board)))
-        readFromConsole(openset->board);
+    while (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
+        readFromConsole(initialMatrix);
 
-    openset->id = id(openset->board);
+    Board initialBoard(initialMatrix);
+    openset = new Node(initialBoard);
 
     openset->g = 0;
-    openset->f = openset->g + h(openset->board);
+    openset->f = openset->g + initialBoard.getPredictedDistance();
 
     openset->parent = nullptr;
     openset->next = nullptr;
 
-    int goal = 123456789;   //id ulozenia ktore jest rozwiazaniem
-    int luka_y;
-    int luka_x;
+    const int GOAL = 123456789;   //id ulozenia ktore jest rozwiazaniem
     int copy_up[3][3];
     int copy_down[3][3];
     int copy_left[3][3];
     int copy_right[3][3];
 
-    while (openset->id != goal)
+    while (openset->board.getId() != GOAL)
     {
         transferToClosedset(closedset, openset);    //kopiuje element ktorym sie teraz zajmuje do listy elementow odwiedzonych
-        for (int i=0; i<3; i++)
-            for (int j=0; j<3; j++)
-                if (openset->board[i][j] == 9)
-                {
-                    luka_y = i;
-                    luka_x = j;
-                    break;
-                }
+        Point luka = openset->board.findEmptySpace();
         //sprawdza czy nie stoi przy danej krawedzi, a potem, jezeli moze, wykonuje ruch
-        if (luka_y != 0)
-            moveMaker (openset, closedset, copy_up, luka_y, luka_x, luka_y-1, luka_x);
-        if (luka_y != 2)
-            moveMaker (openset, closedset, copy_down, luka_y, luka_x, luka_y+1, luka_x);
-        if (luka_x != 0)
-            moveMaker (openset, closedset, copy_left, luka_y, luka_x, luka_y, luka_x-1);
-        if (luka_x != 2)
-            moveMaker (openset, closedset, copy_right, luka_y, luka_x, luka_y, luka_x+1);
+        if (luka.y != 0)
+            moveMaker (openset, closedset, luka, luka.y-1, luka.x);
+        if (luka.y != 2)
+            moveMaker (openset, closedset, luka, luka.y+1, luka.x);
+        if (luka.x != 0)
+            moveMaker (openset, closedset, luka, luka.y, luka.x-1);
+        if (luka.x != 2)
+            moveMaker (openset, closedset, luka, luka.y, luka.x+1);
 
         //usuwa element ktorym sie aktualnie zajmowal. Juz przepisal go do listy elementow odwiedzonych
         Node *temporary = openset;
