@@ -3,14 +3,22 @@
 
 #include "board.h"
 
-struct Node
+class Node
 {
+public:
+    Node(Board inputBoard, Node *parent);
     Node(Board inputBoard);
 
-    int g, f;   //dlugosc sciezki, glugosc sciezki + optymistyczna dlugosc drogi do celu
+    int getTraveledDistance() const;
+    int getFullDistance() const;
+
     Board board;
     Node *parent;   //element ktory wywolal ten rekord. Poprzedni ruch. To nie musi byc poprzedni element tej listy
     Node *next;
+
+private:
+    int traveledDistance_;  //dlugosc sciezki
+    int fullDistance_;      //dllugosc sciezki + optymistyczna dlugosc drogi do celu
 };
 
 #endif // NODE_H

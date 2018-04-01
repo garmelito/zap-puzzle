@@ -19,25 +19,14 @@ int main()
 
     int initialMatrix[3][3];
     readFromFile (initialMatrix);
-
     while (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
         readFromConsole(initialMatrix);
 
     Board initialBoard(initialMatrix);
     openset = new Node(initialBoard);
-
-    openset->g = 0;
-    openset->f = openset->g + initialBoard.getPredictedDistance();
-
-    openset->parent = nullptr;
     openset->next = nullptr;
 
     const int GOAL = 123456789;   //id ulozenia ktore jest rozwiazaniem
-    int copy_up[3][3];
-    int copy_down[3][3];
-    int copy_left[3][3];
-    int copy_right[3][3];
-
     while (openset->board.getId() != GOAL)
     {
         transferToClosedset(closedset, openset);    //kopiuje element ktorym sie teraz zajmuje do listy elementow odwiedzonych

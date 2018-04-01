@@ -61,26 +61,22 @@ bool alreadyInside (Node *head, int id)
     return false;
 }
 
-//wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po f
-bool notHere (Node *fresh, Node *looking)
+//wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po fullDistance
+bool insertHere (Node *fresh, Node *looking)
 {
     if (looking->next == nullptr)
-        return false;
-    if (fresh->f > looking->next->f)
         return true;
-    return false;
+    if (fresh->getFullDistance() > looking->next->getFullDistance())
+        return false;
+    return true;
 }
 
 //tworzy nowy wezel do liscie dostepnych
-void newNode (Node *openset, Node *parent, int fRating, Board board)
+void insertNode (Node *openset, Node *parent, Board environment)
 {
-    Node *fresh = new Node(board);
-    fresh->g = parent->g+1;
-    fresh->f = fRating; //chyba moglbym wyliczac z parent->g + 1 + board.predictDistanceLeft()
-    fresh->parent = parent;
-
+    Node *fresh = new Node(environment, parent);
     Node *looking = openset;
-    while (notHere(fresh, looking))
+    while (!insertHere(fresh, looking))
         looking = looking->next;
     fresh->next = looking->next;
     looking->next = fresh;
@@ -91,10 +87,7 @@ void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_
 {
     Board environment = openset->board.clone(luka, obok_y, obok_x);
     if (!(alreadyInside(openset, environment.getId()) || alreadyInside(closedset, environment.getId())))
-    {
-        int fRating = openset->g + 1 + environment.getPredictedDistance();
-        newNode (openset, closedset, fRating, environment);
-    }
+        insertNode(openset, closedset, environment);
 }
 
 Node *reconstructPath (Node *openset)

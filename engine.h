@@ -15,7 +15,7 @@ void extermination (Node *&head);
 
 //potrzebne tylko do dzialania funkcji
 /*bool alreadyInside (Node *head, int id);
-void newNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating);
-bool notHere (Node *fresh, Node *topic);*/
+void insertNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating);
+bool insertHere (Node *fresh, Node *topic);*/
 
 #endif // ENGINE_H

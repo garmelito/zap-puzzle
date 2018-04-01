@@ -7,11 +7,14 @@ class Board
 {
 public:
     Board(int matrix[][3]);
-    Board clone(Point luka, int obok_y, int obok_x);
+
     Point findEmptySpace();
+    Board clone(Point luka, int obok_y, int obok_x);
     void print();
-    int getId();
-    int getPredictedDistance();
+
+    int getId() const;
+    int getPredictedDistance() const;
+
 private:
     int matrix_[3][3];
     int id_;

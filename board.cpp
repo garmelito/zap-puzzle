@@ -48,12 +48,12 @@ void Board::print()
     }
 }
 
-int Board::getId()
+int Board::getId() const
 {
     return id_;
 }
 
-int Board::getPredictedDistance()
+int Board::getPredictedDistance() const
 {
     return predictedDistanceLeft_;
 }
