@@ -1,7 +1,8 @@
-#include "board.h"  //zawiera "point.h"
-#include "engine.h" //engine.h i interface.h zawieraja "node.h"
+#include "board.h"
+#include "engine.h"
 #include "interface.h"
 #include "node.h"
+#include "point.h"
 
 #include <iostream>
 //#include <ctime>
@@ -18,9 +19,18 @@ int main()
     Node *closedset = nullptr;
 
     int initialMatrix[3][3];
-    readFromFile (initialMatrix);
-    while (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
+    bool succes = readFromFile ("inputBoard.txt", initialMatrix);
+    if (!succes)
+    {
+        cout <<"Nie odnalazlem pliku. Wpisz dane w consoli \n";
         readFromConsole(initialMatrix);
+    }
+    while (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
+    {
+        cout <<"Bledne dane lub brak rozwiazania. Podaj inne dane \n";
+        readFromConsole(initialMatrix);
+    }
+
 
     Board initialBoard(initialMatrix);
     openset = new Node(initialBoard);

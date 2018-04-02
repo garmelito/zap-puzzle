@@ -3,8 +3,12 @@
 
 #include "node.h"
 
-void readFromFile (int board[][3]);
-void readFromConsole (int board[][3]);
+#include <string>
+
+using namespace std;
+
+bool readFromFile (string nazwa, int matrix[][3]);
+void readFromConsole (int matrix[][3]);
 void printSteps (Node *current);
 
 #endif // INTERFACE_H

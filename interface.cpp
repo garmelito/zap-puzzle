@@ -6,26 +6,25 @@
 
 using namespace std;
 
-void readFromFile (int board[][3])
+bool readFromFile(string nazwa, int matrix[][3])
 {
-    ifstream input ("inputBoard.txt");
+    ifstream input (nazwa);
     if (input)
     {
         for (int i=0; i<3; i++)
             for (int j=0; j<3; j++)
-                input >>board[i][j];
+                input >>matrix[i][j];
         input.close();
+        return true;
     }
-    else
-        readFromConsole (board);
+    return false;
 }
 
-void readFromConsole (int board[][3])
+void readFromConsole (int matrix[][3])
 {
-    cout <<"Nie odnalazlem pliku lub mial bledne dane wejsciowe. Podaj nowe \n";
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
-            cin >>board[i][j];
+            cin >>matrix[i][j];
 }
 
 void printSteps (Node *current)
