@@ -1,4 +1,6 @@
 #include "board.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <iostream>
 #include <cmath>
@@ -36,15 +38,15 @@ Point Board::findEmptySpace()
 
 void Board::print()
 {
-    for (int i=0; i<3; i++)
-    {
-        for (int j=0; j<3; j++)
-            if (matrix_[i][j] == 9)
-                cout <<"  ";
-            else
-                cout <<matrix_[i][j] <<" ";
-        cout <<endl;
-    }
+//    ui->label_1->setText(matrix_[0][0]);
+//    ui->label_2->setText(matrix_[0][1]);
+//    ui->label_3->setText(matrix_[0][2]);
+//    ui->label_4->setText(matrix_[1][0]);
+//    ui->label_5->setText(matrix_[1][1]);
+//    ui->label_6->setText(matrix_[1][2]);
+//    ui->label_7->setText(matrix_[2][0]);
+//    ui->label_8->setText(matrix_[2][1]);
+//    ui->label_9->setText(matrix_[2][2]);
 }
 
 int Board::getId() const
