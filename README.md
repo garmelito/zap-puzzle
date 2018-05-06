@@ -1,5 +1,3 @@
-# zap-puzzle
-To get input data program needs inputBoard.txt in build folder filled with e.g. 
-4 1 3
-7 2 5
-8 6 9
+matrix aka slab to macierz wypelniona liczbami
+board aka environment to klasa zawierajaca matrix i informacje mozliwe do wyliczenia z niego
+node to klasa zawierajaca board i inne potrzebne dane

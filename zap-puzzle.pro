@@ -38,7 +38,8 @@ HEADERS += \
     engine.h \
     interface.h \
     node.h \
-    point.h
+    point.h \
+    algorithm.h
 
 FORMS += \
         mainwindow.ui
