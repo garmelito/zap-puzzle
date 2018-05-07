@@ -1,6 +1,6 @@
 #include "algorithm.h"
 
-void algorithm()
+Node *algorithm()
 {
     Node *openset = nullptr;
     Node *closedset = nullptr;
@@ -48,6 +48,5 @@ void algorithm()
     extermination(openset);
     extermination(closedset);
 
-    printSteps(start);
-    extermination(start);
+    return start;
 }

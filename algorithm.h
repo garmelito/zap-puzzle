@@ -11,6 +11,6 @@
 
 using namespace std;
 
-void algorithm();
+Node *algorithm();
 
 #endif // ALGORITHM_H

@@ -36,19 +36,6 @@ Point Board::findEmptySpace()
     throw "should never reach this point";
 }
 
-void Board::print()
-{
-//    ui->label_1->setText(matrix_[0][0]);
-//    ui->label_2->setText(matrix_[0][1]);
-//    ui->label_3->setText(matrix_[0][2]);
-//    ui->label_4->setText(matrix_[1][0]);
-//    ui->label_5->setText(matrix_[1][1]);
-//    ui->label_6->setText(matrix_[1][2]);
-//    ui->label_7->setText(matrix_[2][0]);
-//    ui->label_8->setText(matrix_[2][1]);
-//    ui->label_9->setText(matrix_[2][2]);
-}
-
 int Board::getId() const
 {
     return id_;

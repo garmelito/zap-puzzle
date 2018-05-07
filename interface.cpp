@@ -26,14 +26,3 @@ void readFromConsole (int matrix[][3])
         for (int j=0; j<3; j++)
             cin >>matrix[i][j];
 }
-
-void printSteps (Node *current)
-{
-    while (current != nullptr)
-    {
-        system("cls");
-        current->board.print();
-        Sleep(480);
-        current = current->next;
-    }
-}
