@@ -12,20 +12,42 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    extermination(start);
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pb_initialization_clicked()
 {
-    Node *start = algorithm();
-//    Node *current = start;
-//    int cyfra = current->board.matrix_[0][0];
-//    stringstream strumien;
-//    strumien << cyfra;
-//    string tekst = strumien.str();
-//    QString tekst_qt = tekst.c_str();
-//    ui->label_1->setText(tekst_qt);
-    int tablica[3][3];
-    tablica = start->board.getMatrix();
-    // extermination(start);
+    start = algorithm();
+    current = start;
+    on_pb_nextMove_clicked();
+}
+
+QString MainWindow::intToQstring(int cipher)
+{
+    stringstream stream;
+    if (cipher != 9)    stream << cipher;
+    else                stream << ' ';
+    string text = stream.str();
+    QString text_qt = text.c_str();
+    return text_qt;
+}
+
+void MainWindow::on_pb_nextMove_clicked()
+{
+    if (current != nullptr)
+    {
+        auto tablica = current->board.getMatrix();
+        ui->label_1->setText(intToQstring(tablica[0]));
+        ui->label_2->setText(intToQstring(tablica[1]));
+        ui->label_3->setText(intToQstring(tablica[2]));
+        ui->label_4->setText(intToQstring(tablica[3]));
+        ui->label_5->setText(intToQstring(tablica[4]));
+        ui->label_6->setText(intToQstring(tablica[5]));
+        ui->label_7->setText(intToQstring(tablica[6]));
+        ui->label_8->setText(intToQstring(tablica[7]));
+        ui->label_9->setText(intToQstring(tablica[8]));
+        cout <<endl;
+        current = current->next;
+    }
 }

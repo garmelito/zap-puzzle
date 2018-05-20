@@ -22,10 +22,13 @@ public:
     Ui::MainWindow *ui;
 
 private slots:
-    void on_pushButton_clicked();
+    void on_pb_initialization_clicked();
+    void on_pb_nextMove_clicked();
 
-//private:
-
+private:
+    QString intToQstring (int cipher);
+    Node* start;
+    Node* current; //na koniec sprawdz czy obie deklaracje moga byc zapisane w jednej linii
 };
 
 
