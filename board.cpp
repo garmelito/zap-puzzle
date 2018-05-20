@@ -27,6 +27,11 @@ Board Board::clone(Point luka, int obok_y, int obok_x)
     return Board(newSlab);
 }
 
+int *Board::getMatrix() const
+{
+    return matrix_;
+}
+
 Point Board::findEmptySpace()
 {
     for (int y=0; y<3; y++)

@@ -1,7 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "algorithm.h"
+
 #include <QMainWindow>
+#include <windows.h>
+#include <iostream>
+#include <sstream>
 
 namespace Ui {
 class MainWindow;
@@ -22,5 +27,7 @@ private slots:
 //private:
 
 };
+
+
 
 #endif // MAINWINDOW_H
