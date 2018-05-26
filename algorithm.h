@@ -11,6 +11,6 @@
 
 using namespace std;
 
-Node *algorithm();
+Node *algorithm(Board initialBoard);
 
 #endif // ALGORITHM_H

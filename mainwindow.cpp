@@ -1,9 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "board.h"
+#include "interface.h"
 
 #include <QTimer>
+#include <stdlib.h>
 
 using namespace std;
+
+//moge pozostawiona we wpisywaniu pusta plytke spacje zminiac na 9
+//dlaczego tabulator przeskakuje tak dziwacznie
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,15 +21,18 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     extermination(start);
+    delete start;
+    delete current;
     delete ui;
 }
 
 void MainWindow::on_pb_initialization_clicked()
 {
-    start = algorithm();
+    Board initialBoard(initialMatrix);
+    start = algorithm(initialBoard);
     current = start;
+
     ui->pb_initialization->setEnabled(false);
-    ui->pb_skipOne->setEnabled(true);
     ui->pb_nextMove->setEnabled(true);
 
     QTimer *timer = new QTimer(this);
@@ -31,22 +40,7 @@ void MainWindow::on_pb_initialization_clicked()
     timer->start(400);
 }
 
-QString MainWindow::intToQstring(int cipher)
-{
-    stringstream stream;
-    if (cipher != 9)    stream << cipher;
-    else                stream << ' ';
-    string text = stream.str();
-    QString text_qt = text.c_str();
-    return text_qt;
-}
-
-void MainWindow::on_pb_skipOne_pressed()
-{
-    if (current != nullptr)
-        current = current->next;
-}
-
+//Nie umiem sie go pozbyc. Timer chce wywolywac slot
 void MainWindow::on_pb_nextMove_clicked()
 {
     if (current != nullptr)
@@ -65,4 +59,62 @@ void MainWindow::on_pb_nextMove_clicked()
         repaint();
         current = current->next;
     }
+}
+
+void MainWindow::on_pb_wybierzPlik_clicked()
+{
+    ui->tb_komunikaty->clear();
+    bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
+    if (!succes)
+        ui->tb_komunikaty->setText(stringToQString("Nie znalazlem pliku \n"));
+    else
+    {
+        ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
+        if (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
+            ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania lub bedne dane. Wpisz inne \n"));
+    }
+
+    //on_pb_nextMove_clicked();
+    //musze czesc wypisujaca przerzucic do nowej funkcji. Ale problemem jest zmiana tablicy[3][3] na [9]
+}
+
+void MainWindow::on_pb_wybierzDane_clicked()
+{
+    ui->tb_komunikaty->clear();
+    initialMatrix[0][0] = stoi(ui->lineEdit->text().toStdString());
+    initialMatrix[0][1] = stoi(ui->lineEdit_2->text().toStdString());
+    initialMatrix[0][2] = stoi(ui->lineEdit_3->text().toStdString());
+    initialMatrix[1][0] = stoi(ui->lineEdit_4->text().toStdString());
+    initialMatrix[1][1] = stoi(ui->lineEdit_5->text().toStdString());
+    initialMatrix[1][2] = stoi(ui->lineEdit_6->text().toStdString());
+    initialMatrix[2][0] = stoi(ui->lineEdit_7->text().toStdString());
+    initialMatrix[2][1] = stoi(ui->lineEdit_8->text().toStdString());
+    initialMatrix[2][2] = stoi(ui->lineEdit_9->text().toStdString());
+
+    if (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
+        ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania lub bedne dane. Wpisz inne \n"));
+    else
+        ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
+
+}
+
+QString MainWindow::intToQstring(int cipher)
+{
+    stringstream stream;
+    if (cipher != 9)    stream << cipher;
+    else                stream << ' ';
+    string text = stream.str();
+    QString text_qt = text.c_str();
+    return text_qt;
+}
+
+int MainWindow::QStringToInt(QString text_qt)
+{
+    int cipher = stoi(text_qt.toStdString());
+    return cipher;
+}
+
+QString MainWindow::stringToQString(string text)
+{
+    return text.c_str();
 }

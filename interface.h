@@ -8,6 +8,5 @@
 using namespace std;
 
 bool readFromFile (string nazwa, int matrix[][3]);
-void readFromConsole (int matrix[][3]);
 
 #endif // INTERFACE_H

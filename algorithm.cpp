@@ -1,25 +1,10 @@
 #include "algorithm.h"
 
-Node *algorithm()
+Node *algorithm(Board initialBoard)
 {
     Node *openset = nullptr;
     Node *closedset = nullptr;
 
-    int initialMatrix[3][3];
-    bool succes = readFromFile ("inputBoard.txt", initialMatrix);
-    if (!succes)
-    {
-        cout <<"Nie odnalazlem pliku. Wpisz dane w consoli \n";
-        readFromConsole(initialMatrix);
-    }
-    while (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
-    {
-        cout <<"Bledne dane lub brak rozwiazania. Podaj inne dane \n";
-        readFromConsole(initialMatrix);
-    }
-
-
-    Board initialBoard(initialMatrix);
     openset = new Node(initialBoard);
     openset->next = nullptr;
 
