@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <windows.h>
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,22 +22,8 @@ void MainWindow::on_pb_initialization_clicked()
 {
     start = algorithm();
     current = start;
-    on_pb_nextMove_clicked();
-}
-
-QString MainWindow::intToQstring(int cipher)
-{
-    stringstream stream;
-    if (cipher != 9)    stream << cipher;
-    else                stream << ' ';
-    string text = stream.str();
-    QString text_qt = text.c_str();
-    return text_qt;
-}
-
-void MainWindow::on_pb_nextMove_clicked()
-{
-    if (current != nullptr)
+    ui->pb_skipOne->setEnabled(true);
+    while (current != nullptr)
     {
         auto tablica = current->board.getMatrix();
         ui->label_1->setText(intToQstring(tablica[0]));
@@ -48,6 +36,23 @@ void MainWindow::on_pb_nextMove_clicked()
         ui->label_8->setText(intToQstring(tablica[7]));
         ui->label_9->setText(intToQstring(tablica[8]));
         cout <<endl;
+        repaint();
+        Sleep(300);
         current = current->next;
     }
+}
+
+QString MainWindow::intToQstring(int cipher)
+{
+    stringstream stream;
+    if (cipher != 9)    stream << cipher;
+    else                stream << ' ';
+    string text = stream.str();
+    QString text_qt = text.c_str();
+    return text_qt;
+}
+
+void MainWindow::on_pb_skipOne_pressed()
+{
+    current = current->next;
 }

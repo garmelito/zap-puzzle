@@ -23,12 +23,13 @@ public:
 
 private slots:
     void on_pb_initialization_clicked();
-    void on_pb_nextMove_clicked();
+
+    void on_pb_skipOne_pressed();
 
 private:
     QString intToQstring (int cipher);
     Node* start;
-    Node* current; //na koniec sprawdz czy obie deklaracje moga byc zapisane w jednej linii
+    Node* current;
 };
 
 
