@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <windows.h>
+#include <QTimer>
 
 using namespace std;
 
@@ -22,24 +22,13 @@ void MainWindow::on_pb_initialization_clicked()
 {
     start = algorithm();
     current = start;
+    ui->pb_initialization->setEnabled(false);
     ui->pb_skipOne->setEnabled(true);
-    while (current != nullptr)
-    {
-        auto tablica = current->board.getMatrix();
-        ui->label_1->setText(intToQstring(tablica[0]));
-        ui->label_2->setText(intToQstring(tablica[1]));
-        ui->label_3->setText(intToQstring(tablica[2]));
-        ui->label_4->setText(intToQstring(tablica[3]));
-        ui->label_5->setText(intToQstring(tablica[4]));
-        ui->label_6->setText(intToQstring(tablica[5]));
-        ui->label_7->setText(intToQstring(tablica[6]));
-        ui->label_8->setText(intToQstring(tablica[7]));
-        ui->label_9->setText(intToQstring(tablica[8]));
-        cout <<endl;
-        repaint();
-        Sleep(300);
-        current = current->next;
-    }
+    ui->pb_nextMove->setEnabled(true);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_pb_nextMove_clicked()));
+    timer->start(400);
 }
 
 QString MainWindow::intToQstring(int cipher)
@@ -54,5 +43,26 @@ QString MainWindow::intToQstring(int cipher)
 
 void MainWindow::on_pb_skipOne_pressed()
 {
-    current = current->next;
+    if (current != nullptr)
+        current = current->next;
+}
+
+void MainWindow::on_pb_nextMove_clicked()
+{
+    if (current != nullptr)
+    {
+        auto tablica = current->board.getMatrix();
+        ui->label_1->setText(intToQstring(tablica[0]));
+        ui->label_2->setText(intToQstring(tablica[1]));
+        ui->label_3->setText(intToQstring(tablica[2]));
+        ui->label_4->setText(intToQstring(tablica[3]));
+        ui->label_5->setText(intToQstring(tablica[4]));
+        ui->label_6->setText(intToQstring(tablica[5]));
+        ui->label_7->setText(intToQstring(tablica[6]));
+        ui->label_8->setText(intToQstring(tablica[7]));
+        ui->label_9->setText(intToQstring(tablica[8]));
+        cout <<endl;
+        repaint();
+        current = current->next;
+    }
 }

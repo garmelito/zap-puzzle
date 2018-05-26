@@ -26,6 +26,8 @@ private slots:
 
     void on_pb_skipOne_pressed();
 
+    void on_pb_nextMove_clicked();
+
 private:
     QString intToQstring (int cipher);
     Node* start;
