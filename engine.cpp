@@ -1,16 +1,31 @@
 #include "engine.h"
 
+#include <fstream>
 #include <cmath>
 
+bool readFromFile(string nazwa, int matrix[][3])
+{
+    ifstream input (nazwa);
+    if (input)
+    {
+        for (int i=0; i<3; i++)
+            for (int j=0; j<3; j++)
+                input >>matrix[i][j];
+        input.close();
+        return true;
+    }
+    return false;
+}
+
+//kazdy ruch zmienia permutacje o parzysta ilosc. Dla ruchu w poziomie 0, a w pionie -2, 0 lub +2
+//numer rzedu pustej plytki potrzebny jest tylko dla plansz 4x4 i innych parzystych. Tutaj wprowadzal bledy
 bool solutionIsPosible(int matrix[][3])
 {
     int permutationInversions = 0;
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
         {
-            if (matrix[i][j] == 9)
-                permutationInversions += i + 1;
-            else
+            if (matrix[i][j] != 9)
             {
                 for (int l=j; l<3; l++)
                     if (matrix[i][l] < matrix[i][j])
@@ -22,7 +37,7 @@ bool solutionIsPosible(int matrix[][3])
             }
         }
 
-    if (permutationInversions % 2 != 0)
+    if (permutationInversions % 2 == 0)
         return true;
     return false;
 }

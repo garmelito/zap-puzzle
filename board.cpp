@@ -24,6 +24,12 @@ Board Board::clone(Point luka, int obok_y, int obok_x)
     std::swap(newSlab[luka.y][luka.x], newSlab[obok_y][obok_x]);
     return Board(newSlab);
 }
+//pierwszy constant jest potrzebny zeby typy sie zgadzaly. Matrix_ wydaje sie byc const
+//drugi wystepuje w kazdej metodzie get. Chyba odpowiada za to aby nie mozna bylo zmienic wartosci prywatnego pola
+const int *Board::getMatrix() const
+{
+    return &matrix_[0][0];
+}
 
 Point Board::findEmptySpace()
 {
@@ -32,19 +38,6 @@ Point Board::findEmptySpace()
             if (matrix_[y][x] == 9)
                 return Point{x,y};
     throw "should never reach this point";
-}
-
-void Board::print()
-{
-    for (int i=0; i<3; i++)
-    {
-        for (int j=0; j<3; j++)
-            if (matrix_[i][j] == 9)
-                cout <<"  ";
-            else
-                cout <<matrix_[i][j] <<" ";
-        cout <<endl;
-    }
 }
 
 int Board::getId() const

@@ -10,12 +10,12 @@ public:
 
     Point findEmptySpace();
     Board clone(Point luka, int obok_y, int obok_x);
-    void print();
+    const int *getMatrix() const;
 
     int getId() const;
     int getPredictedDistance() const;
 
-private:
+private:    
     int matrix_[3][3];
     int id_;
     int predictedDistanceLeft_;

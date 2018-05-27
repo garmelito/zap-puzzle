@@ -1,7 +1,7 @@
 #include "node.h"
 
 Node::Node(Board inputBoard, Node *parent)
-    : board(inputBoard)
+    : board(inputBoard)     //board = input board, w ten sposob bo konstruktorowi boarda musialbym podac tablice ktorej juz nie mam
 {
     this->parent = parent;
     traveledDistance_ = parent->traveledDistance_ + 1;
