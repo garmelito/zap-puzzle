@@ -3,7 +3,6 @@
 
 #include "board.h"
 #include "engine.h"
-#include "interface.h"
 #include "node.h"
 #include "point.h"
 

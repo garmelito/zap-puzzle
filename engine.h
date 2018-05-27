@@ -4,6 +4,12 @@
 #include "node.h"
 #include "point.h"
 
+#include <string>
+
+using namespace std;
+
+bool readFromFile (string nazwa, int matrix[][3]);
+
 bool solutionIsPosible(int matrix[][3]);
 bool inRules(int matrix[][3]);
 

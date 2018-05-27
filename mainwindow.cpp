@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "board.h"
-#include "interface.h"
 
 #include <QTimer>
 #include <stdlib.h>
@@ -33,7 +32,7 @@ void MainWindow::on_pb_initialization_clicked()
     current = start;
 
     ui->pb_initialization->setEnabled(false);
-    ui->pb_nextMove->setEnabled(true);
+    //ui->pb_nextMove->setEnabled(true);    //najchetneiej pozbylbym sie tego przycisku
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_pb_nextMove_clicked()));
@@ -68,11 +67,7 @@ void MainWindow::on_pb_wybierzPlik_clicked()
     if (!succes)
         ui->tb_komunikaty->setText(stringToQString("Nie znalazlem pliku \n"));
     else
-    {
-        ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
-        if (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
-            ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania lub bedne dane. Wpisz inne \n"));
-    }
+        dataCheck();
 
     //on_pb_nextMove_clicked();
     //musze czesc wypisujaca przerzucic do nowej funkcji. Ale problemem jest zmiana tablicy[3][3] na [9]
@@ -91,11 +86,7 @@ void MainWindow::on_pb_wybierzDane_clicked()
     initialMatrix[2][1] = stoi(ui->lineEdit_8->text().toStdString());
     initialMatrix[2][2] = stoi(ui->lineEdit_9->text().toStdString());
 
-    if (!(solutionIsPosible(initialMatrix) && inRules(initialMatrix)))
-        ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania lub bedne dane. Wpisz inne \n"));
-    else
-        ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
-
+    dataCheck();
 }
 
 QString MainWindow::intToQstring(int cipher)
@@ -117,4 +108,14 @@ int MainWindow::QStringToInt(QString text_qt)
 QString MainWindow::stringToQString(string text)
 {
     return text.c_str();
+}
+
+void MainWindow::dataCheck()
+{
+    if (!inRules(initialMatrix))
+        ui->tb_komunikaty->setText(stringToQString("Bledne dane. Wpisz inne \n"));
+    else if (!(solutionIsPosible(initialMatrix)))
+        ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania. Wpisz inne liczby \n"));
+    else
+        ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
 }

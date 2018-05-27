@@ -31,6 +31,7 @@ private:
     QString intToQstring (int cipher);
     int QStringToInt (QString text_qt);
     QString stringToQString (string text);
+    void dataCheck ();
 
     Node* start;    //chyba nie potrzebuje kopii, na razie przechowuje na wszelki wypadek
     Node* current;

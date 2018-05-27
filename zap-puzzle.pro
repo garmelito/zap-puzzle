@@ -28,7 +28,6 @@ SOURCES += \
         mainwindow.cpp \
     board.cpp \
     engine.cpp \
-    interface.cpp \
     node.cpp \
     algorithm.cpp
 
@@ -36,7 +35,6 @@ HEADERS += \
         mainwindow.h \
     board.h \
     engine.h \
-    interface.h \
     node.h \
     point.h \
     algorithm.h
