@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "algorithm.h"
+#include "board.h"
 
 #include <QMainWindow>
 #include <windows.h>
@@ -31,11 +32,10 @@ private:
     QString intToQstring (int cipher);
     int QStringToInt (QString text);
     QString stringToQString (string text);
-    void dataCheck ();
 
     Node* start;    //chyba nie potrzebuje kopii, na razie przechowuje na wszelki wypadek
     Node* current;
-    int initialMatrix[3][3];
+    Board* initialBoard;
 };
 
 

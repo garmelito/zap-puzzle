@@ -31,6 +31,16 @@ const int *Board::getMatrix() const
     return &matrix_[0][0];
 }
 
+void Board::dataCheck()
+{
+    if (!inRules(matrix_))
+        ui->tb_komunikaty->setText(stringToQString("Bledne dane. Wpisz inne \n"));
+    else if (!(solutionIsPosible(matrix_)))
+        ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania. Wpisz inne liczby \n"));
+    else
+        ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
+}
+
 Point Board::findEmptySpace()
 {
     for (int y=0; y<3; y++)

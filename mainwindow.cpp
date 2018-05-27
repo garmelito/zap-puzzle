@@ -1,13 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "board.h"
 
 #include <QTimer>
 #include <stdlib.h>
 
 using namespace std;
 
-//moge pozostawiona we wpisywaniu pusta plytke spacje zminiac na 9
+//  Jesli stworze initialBoard przed dataCheck, a dataCheck() zamienie na metode klasy Board to nie bede mogl w niej wypisywac
+//  komunkatow na ui->tb_komunikaty. Musialbym wczytaj tutaj tablice jak robie to w nextMove(). Ale wtedy dostalbym tablice 1D
+//  i musialbym przerobic funkcje inRules i solutionIsPossible, zeby na takiej dzialaly. Nie ma sensu dokladac sobie tyle
+//  niepotrzebnej pracy
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,8 +28,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_initialization_clicked()
 {
-    Board initialBoard(initialMatrix);
-    start = algorithm(initialBoard);
+    start = algorithm(*initialBoard);
     current = start;
 
     ui->pb_initialization->setEnabled(false);
@@ -62,11 +63,16 @@ void MainWindow::on_pb_nextMove_clicked()
 void MainWindow::on_pb_wybierzPlik_clicked()
 {
     ui->tb_komunikaty->clear();
+    int initialMatrix[3][3];
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
     if (!succes)
         ui->tb_komunikaty->setText(stringToQString("Nie znalazlem pliku \n"));
     else
-        dataCheck();
+    {
+        initialBoard = new Board (initialMatrix);
+        initialBoard->dataCheck();
+    }
+
 
     //on_pb_nextMove_clicked();
     //musze czesc wypisujaca przerzucic do nowej funkcji. Ale problemem jest zmiana tablicy[3][3] na [9]
@@ -75,6 +81,7 @@ void MainWindow::on_pb_wybierzPlik_clicked()
 void MainWindow::on_pb_wybierzDane_clicked()
 {
     ui->tb_komunikaty->clear();
+    int initialMatrix[3][3];
 
     initialMatrix[0][0] = QStringToInt(ui->lineEdit->text());
     initialMatrix[0][1] = QStringToInt(ui->lineEdit_2->text());
@@ -86,7 +93,8 @@ void MainWindow::on_pb_wybierzDane_clicked()
     initialMatrix[2][1] = QStringToInt(ui->lineEdit_8->text());
     initialMatrix[2][2] = QStringToInt(ui->lineEdit_9->text());
 
-    dataCheck();
+    initialBoard = new Board (initialMatrix);
+    initialBoard->dataCheck();
 }
 
 QString MainWindow::intToQstring(int cipher)
@@ -109,14 +117,4 @@ int MainWindow::QStringToInt(QString text)
 QString MainWindow::stringToQString(string text)
 {
     return text.c_str();
-}
-
-void MainWindow::dataCheck()
-{
-    if (!inRules(initialMatrix))
-        ui->tb_komunikaty->setText(stringToQString("Bledne dane. Wpisz inne \n"));
-    else if (!(solutionIsPosible(initialMatrix)))
-        ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania. Wpisz inne liczby \n"));
-    else
-        ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
 }

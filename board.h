@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include "point.h"
+#include "engine.h"
 
 class Board
 {
@@ -11,6 +12,7 @@ public:
     Point findEmptySpace();
     Board clone(Point luka, int obok_y, int obok_x);
     const int *getMatrix() const;
+    void dataCheck();
 
     int getId() const;
     int getPredictedDistance() const;
