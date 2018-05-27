@@ -10,6 +10,6 @@
 
 using namespace std;
 
-Node *algorithm(Board initialBoard);
+Node *algorithm(Board initialBoard, Board goalBoard);
 
 #endif // ALGORITHM_H

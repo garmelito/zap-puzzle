@@ -58,7 +58,7 @@ bool inRules(int matrix[][3])
 //kopiuje element do listy elementow odwiedzonych. Towrzy tam NOWY element ktoremu przepisuje wartosci
 void transferToClosedset (Node *&closedset, Node *openset)
 {
-    Node *anew = new Node(openset->board);
+    Node *anew = new Node(openset->board, openset->goal);
     *anew = *openset;
     anew->next = closedset;
     closedset = anew;
@@ -89,7 +89,7 @@ bool insertHere (Node *fresh, Node *looking)
 //tworzy nowy wezel do liscie dostepnych
 void insertNode (Node *openset, Node *parent, Board environment)
 {
-    Node *fresh = new Node(environment, parent);
+    Node *fresh = new Node(environment, openset->goal, parent);
     Node *looking = openset;
     while (!insertHere(fresh, looking))
         looking = looking->next;
@@ -107,13 +107,13 @@ void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_
 
 Node *reconstructPath (Node *openset)
 {
-    Node *head = new Node(openset->board);
+    Node *head = new Node(openset->board, openset->goal);
     *head = *openset;
     head->next = nullptr;
 
     while (head->parent != nullptr)
     {
-        Node *current = new Node(head->parent->board);
+        Node *current = new Node(head->parent->board, openset->goal);
         *current = *(head->parent);
         current ->next = head;
         head = current;

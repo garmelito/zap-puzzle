@@ -27,6 +27,9 @@ private slots:
     void on_pb_wybierzPlik_clicked();
     void on_pb_wybierzDane_clicked();
 
+
+    void on_pb_wybierzDane_2_clicked();
+
 private:
     QString intToQstring (int cipher);
     int QStringToInt (QString text);
@@ -36,6 +39,7 @@ private:
     Node* start;    //chyba nie potrzebuje kopii, na razie przechowuje na wszelki wypadek
     Node* current;
     int initialMatrix[3][3];
+    int goalMatrix[3][3];
 };
 
 

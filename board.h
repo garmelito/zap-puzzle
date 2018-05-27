@@ -13,15 +13,12 @@ public:
     const int *getMatrix() const;
 
     int getId() const;
-    int getPredictedDistance() const;
 
 private:    
     int matrix_[3][3];
     int id_;
-    int predictedDistanceLeft_;
 
     void calculateId();
-    void predictDistanceLeft();
 };
 
 #endif // BOARD_H

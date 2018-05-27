@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <ctime>
 
 using namespace std;
 
@@ -11,7 +12,6 @@ Board::Board(int matrix[][3])
         for (int j=0; j<3; j++)
             matrix_[i][j] = matrix[i][j];
     calculateId();
-    predictDistanceLeft();
 }
 
 //tworzy nowa tablice w ktorej na miejsce luki (9) wchodzi plytka obok
@@ -45,10 +45,10 @@ int Board::getId() const
     return id_;
 }
 
-int Board::getPredictedDistance() const
-{
-    return predictedDistanceLeft_;
-}
+//int Board::getPredictedDistance() const
+//{
+//    return predictedDistanceLeft_;
+//}
 
 void Board::calculateId()
 {
@@ -61,19 +61,4 @@ void Board::calculateId()
             waga /= 10;
         }
     id_ = suma;
-}
-
-void Board::predictDistanceLeft()
-{
-    int h = 0;
-    for (int i=0; i<3; i++)
-        for (int j=0; j<3; j++)
-        {
-            //sumuje odleglosc kazdego elementu od swojego polozenia
-            int m = (matrix_[i][j]-1)/3;  //wspolrzedna y wlasciwego polozenia
-            int n = (matrix_[i][j]%3)-1;  //wspolrzedna x wlasciwego polozenia
-            if (n<0)    n += 3;
-            h += abs(m-i) + abs(n-j);   //odleglosc aktualnego polozenia od wlasciwego
-        }
-    predictedDistanceLeft_ = h;
 }

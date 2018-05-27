@@ -1,6 +1,6 @@
 #include "algorithm.h"
 
-Node *algorithm(Board initialBoard)
+Node *algorithm(Board initialBoard, Board goalBoard)
 {
     Node *openset = nullptr;
     Node *closedset = nullptr;
@@ -8,7 +8,7 @@ Node *algorithm(Board initialBoard)
     openset = new Node(initialBoard);
     openset->next = nullptr;
 
-    const int GOAL = 123456789;   //id ulozenia ktore jest rozwiazaniem
+    const int GOAL = goalBoard.getId();   //id ulozenia ktore jest rozwiazaniem
     while (openset->board.getId() != GOAL)
     {
         transferToClosedset(closedset, openset);    //kopiuje element ktorym sie teraz zajmuje do listy elementow odwiedzonych

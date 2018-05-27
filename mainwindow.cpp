@@ -7,7 +7,10 @@
 
 using namespace std;
 
-//moge pozostawiona we wpisywaniu pusta plytke spacje zminiac na 9
+//podaje Board goal w argumencie dla algorithm; Jego id jest z niego wczytawane przez get
+//predictedDistanceLeft_ jest teraz polem Node. Jestem w stanie je wyliczyc przez getMatrix() z board i goal. Zmodyfikowalem jego
+//obliczanie na prostsze. Program dluzej startuje ale dalej znajduje rozwiazanie
+//goal jest Boardem obok board w kazdym Node. Node potrzebuje go w konstruktorze, ale przypisanie jak boarda nie dziala
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,7 +30,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_pb_initialization_clicked()
 {
     Board initialBoard(initialMatrix);
-    start = algorithm(initialBoard);
+    Board goalBoard(goalMatrix);
+    start = algorithm(initialBoard, goalBoard);
     current = start;
 
     ui->pb_initialization->setEnabled(false);
@@ -119,4 +123,21 @@ void MainWindow::dataCheck()
         ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania. Wpisz inne liczby \n"));
     else
         ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
+}
+
+void MainWindow::on_pb_wybierzDane_2_clicked()
+{
+    ui->tb_komunikaty->clear();
+
+    initialMatrix[0][0] = QStringToInt(ui->lineEdit_13->text());
+    initialMatrix[0][1] = QStringToInt(ui->lineEdit_14->text());
+    initialMatrix[0][2] = QStringToInt(ui->lineEdit_15->text());
+    initialMatrix[1][0] = QStringToInt(ui->lineEdit_16->text());
+    initialMatrix[1][1] = QStringToInt(ui->lineEdit_17->text());
+    initialMatrix[1][2] = QStringToInt(ui->lineEdit_18->text());
+    initialMatrix[2][0] = QStringToInt(ui->lineEdit_19->text());
+    initialMatrix[2][1] = QStringToInt(ui->lineEdit_20->text());
+    initialMatrix[2][2] = QStringToInt(ui->lineEdit_21->text());
+
+    dataCheck();
 }
