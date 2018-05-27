@@ -8,7 +8,6 @@
 using namespace std;
 
 //moge pozostawiona we wpisywaniu pusta plytke spacje zminiac na 9
-//dlaczego tabulator przeskakuje tak dziwacznie
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -76,15 +75,16 @@ void MainWindow::on_pb_wybierzPlik_clicked()
 void MainWindow::on_pb_wybierzDane_clicked()
 {
     ui->tb_komunikaty->clear();
-    initialMatrix[0][0] = stoi(ui->lineEdit->text().toStdString());
-    initialMatrix[0][1] = stoi(ui->lineEdit_2->text().toStdString());
-    initialMatrix[0][2] = stoi(ui->lineEdit_3->text().toStdString());
-    initialMatrix[1][0] = stoi(ui->lineEdit_4->text().toStdString());
-    initialMatrix[1][1] = stoi(ui->lineEdit_5->text().toStdString());
-    initialMatrix[1][2] = stoi(ui->lineEdit_6->text().toStdString());
-    initialMatrix[2][0] = stoi(ui->lineEdit_7->text().toStdString());
-    initialMatrix[2][1] = stoi(ui->lineEdit_8->text().toStdString());
-    initialMatrix[2][2] = stoi(ui->lineEdit_9->text().toStdString());
+
+    initialMatrix[0][0] = QStringToInt(ui->lineEdit->text());
+    initialMatrix[0][1] = QStringToInt(ui->lineEdit_2->text());
+    initialMatrix[0][2] = QStringToInt(ui->lineEdit_3->text());
+    initialMatrix[1][0] = QStringToInt(ui->lineEdit_4->text());
+    initialMatrix[1][1] = QStringToInt(ui->lineEdit_5->text());
+    initialMatrix[1][2] = QStringToInt(ui->lineEdit_6->text());
+    initialMatrix[2][0] = QStringToInt(ui->lineEdit_7->text());
+    initialMatrix[2][1] = QStringToInt(ui->lineEdit_8->text());
+    initialMatrix[2][2] = QStringToInt(ui->lineEdit_9->text());
 
     dataCheck();
 }
@@ -95,14 +95,15 @@ QString MainWindow::intToQstring(int cipher)
     if (cipher != 9)    stream << cipher;
     else                stream << ' ';
     string text = stream.str();
-    QString text_qt = text.c_str();
-    return text_qt;
+    return text.c_str();
 }
 
-int MainWindow::QStringToInt(QString text_qt)
+int MainWindow::QStringToInt(QString text)
 {
-    int cipher = stoi(text_qt.toStdString());
-    return cipher;
+    if (text == "" || text == " ")
+        return 9;
+    else
+        return stoi(text.toStdString());
 }
 
 QString MainWindow::stringToQString(string text)

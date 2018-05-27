@@ -29,7 +29,7 @@ private slots:
 
 private:
     QString intToQstring (int cipher);
-    int QStringToInt (QString text_qt);
+    int QStringToInt (QString text);
     QString stringToQString (string text);
     void dataCheck ();
 
