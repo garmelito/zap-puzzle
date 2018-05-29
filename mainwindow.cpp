@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    firstDraw = true;
 }
 
 MainWindow::~MainWindow()
@@ -53,7 +54,6 @@ void MainWindow::on_pb_nextMove_clicked()
         ui->label_7->setText(intToQstring(tablica[6]));
         ui->label_8->setText(intToQstring(tablica[7]));
         ui->label_9->setText(intToQstring(tablica[8]));
-        cout <<endl;
         repaint();
         current = current->next;
     }
@@ -87,6 +87,27 @@ void MainWindow::on_pb_wybierzDane_clicked()
     initialMatrix[2][2] = QStringToInt(ui->lineEdit_9->text());
 
     dataCheck();
+}
+
+void MainWindow::on_pb_losuj_clicked()
+{
+    int table[9] ={0};
+    draw (table, firstDraw);
+    if (firstDraw)
+        firstDraw = false;
+
+    ui->lineEdit->setText(intToQstring(table[0]));
+    ui->lineEdit_2->setText(intToQstring(table[1]));
+    ui->lineEdit_3->setText(intToQstring(table[2]));
+    ui->lineEdit_4->setText(intToQstring(table[3]));
+    ui->lineEdit_5->setText(intToQstring(table[4]));
+    ui->lineEdit_6->setText(intToQstring(table[5]));
+    ui->lineEdit_7->setText(intToQstring(table[6]));
+    ui->lineEdit_8->setText(intToQstring(table[7]));
+    ui->lineEdit_9->setText(intToQstring(table[8]));
+    repaint();
+
+    on_pb_wybierzDane_clicked();
 }
 
 QString MainWindow::intToQstring(int cipher)

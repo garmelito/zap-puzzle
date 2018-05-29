@@ -2,6 +2,8 @@
 
 #include <fstream>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 bool readFromFile(string nazwa, int matrix[][3])
 {
@@ -15,6 +17,32 @@ bool readFromFile(string nazwa, int matrix[][3])
         return true;
     }
     return false;
+}
+
+//used to draw without repeats
+bool inside (int drawn, int table[], int n)
+{
+    for (int i=0; i<n; i++)
+    {
+        if (drawn == table[i])
+            return true;
+    }
+    return false;
+}
+
+void draw(int table[], bool firstDraw)
+{
+    if (firstDraw)
+        srand(time(NULL));
+
+    int drawn;
+    for (int i=0; i<9; i++)
+    {
+        do{
+            drawn = rand()%9+1;
+        }while (inside(drawn, table, i));
+        table[i] = drawn;
+    }
 }
 
 //kazdy ruch zmienia permutacje o parzysta ilosc. Dla ruchu w poziomie 0, a w pionie -2, 0 lub +2

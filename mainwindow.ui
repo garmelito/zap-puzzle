@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>660</width>
-    <height>502</height>
+    <width>690</width>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -434,13 +434,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>23</x>
       <y>34</y>
       <width>342</width>
-      <height>391</height>
+      <height>441</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -538,6 +538,26 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pb_losuj">
+       <property name="text">
+        <string>Losuj</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QTextBrowser" name="tb_komunikaty"/>
      </item>
     </layout>
@@ -548,7 +568,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>660</width>
+     <width>690</width>
      <height>25</height>
     </rect>
    </property>
