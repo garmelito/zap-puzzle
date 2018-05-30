@@ -1,5 +1,13 @@
 #include "algorithm.h"
 
+#include "board.h"
+#include "engine.h"
+#include "point.h"
+
+#include <iostream>
+
+using namespace std;
+
 Node *algorithm(Board initialBoard)
 {
     Node *openset = nullptr;

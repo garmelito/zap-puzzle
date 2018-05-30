@@ -1,7 +1,7 @@
 #include "board.h"
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 

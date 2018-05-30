@@ -1,15 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "algorithm.h"
-#include "board.h"
+#include "node.h"
 
 #include <QMainWindow>
 
-#include <sstream>
-#include <QTimer>
-#include <stdlib.h>
-#include <fstream>
+using namespace std;
 
 namespace Ui {
 class MainWindow;

@@ -142,7 +142,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -154,18 +154,11 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="pb_initialization">
-       <property name="text">
-        <string>Start solving</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pb_nextMove">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Next Move</string>
+        <string>Rozwiaz</string>
        </property>
       </widget>
      </item>
@@ -576,14 +569,24 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QLabel" name="l_nazwa_plikuOut">
+        <widget class="QLabel" name="l_nazwaPlikuOut">
          <property name="text">
           <string>Nazwa pliku</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="le_nazwaPlikuOut"/>
+        <widget class="QLineEdit" name="le_nazwaPlikuOut">
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="tabletTracking">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
