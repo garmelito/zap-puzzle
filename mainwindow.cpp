@@ -88,10 +88,19 @@ void MainWindow::on_pb_wybierzDane_clicked()
 
 void MainWindow::on_pb_losuj_clicked()
 {
-    int table[9] ={0};
-    draw (table, firstDraw);
     if (firstDraw)
+    {
+        srand(time(NULL));
         firstDraw = false;
+    }
+
+    int table[9] = {0};
+    do{
+        draw (table, firstDraw);
+        for (int i=0; i<3; i++)
+            for (int j=0; j<3; j++)
+                initialMatrix[i][j] = table[i*3+j];
+    }while (!solutionIsPosible(initialMatrix));
 
     ui->lineEdit->setText(intToQstring(table[0]));
     ui->lineEdit_2->setText(intToQstring(table[1]));
@@ -111,9 +120,10 @@ void MainWindow::on_pb_zapiszDoPliku_clicked()
     if (ui->le_nazwaPlikuOut->text() != "")
     {
         ofstream zapis(ui->le_nazwaPlikuOut->text().toStdString());
-        while (start != nullptr)
+        Node* operating = start;
+        while (operating != nullptr)
         {
-            auto tablica = start->board.getMatrix();
+            auto tablica = operating->board.getMatrix();
             for (int i=0; i<3; i++)
             {
                 for (int j=0; j<3; j++)
@@ -127,7 +137,7 @@ void MainWindow::on_pb_zapiszDoPliku_clicked()
             }
             zapis <<endl;
 
-            start = start->next;
+            operating = operating->next;
         }
         zapis.close();
         ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));

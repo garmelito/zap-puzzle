@@ -32,9 +32,6 @@ bool inside (int drawn, int table[], int n)
 
 void draw(int table[], bool firstDraw)
 {
-    if (firstDraw)
-        srand(time(NULL));
-
     int drawn;
     for (int i=0; i<9; i++)
     {
