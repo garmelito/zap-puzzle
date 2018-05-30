@@ -1,9 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "board.h"
-
-#include <QTimer>
-#include <stdlib.h>
 
 using namespace std;
 
@@ -33,6 +29,7 @@ void MainWindow::on_pb_initialization_clicked()
 
     ui->pb_initialization->setEnabled(false);
     //ui->pb_nextMove->setEnabled(true);    //najchetneiej pozbylbym sie tego przycisku
+    ui->pb_zapiszDoPliku->setEnabled(true);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_pb_nextMove_clicked()));
@@ -108,6 +105,41 @@ void MainWindow::on_pb_losuj_clicked()
     repaint();
 
     on_pb_wybierzDane_clicked();
+}
+
+//nie zapisuje do pliku
+//moge wyswietlac na line edit rowniez dane wprowadzone z pliku i rozwiazania
+//niech losuje do skutku
+//zapytaj Mariusza w ktorym pliku umieszczac zalaczenia bibliotek
+void MainWindow::on_pb_zapiszDoPliku_clicked()
+{
+    //dodaj zabezpiecznie przed pozostawieniem pustego pola
+    //dodaj zabezpieczenie przed zlym rozszerzeniem pliku
+    ofstream zapis(ui->l_nazwa_plikuOut->text().toStdString());
+    while (start != nullptr)
+    {
+        auto tablica = start->board.getMatrix();
+        for (int i=0; i<3; i++)
+        {
+            for (int j=0; j<3; j++)
+                zapis << tablica[i*3+i] <<" ";
+            zapis <<endl;
+        }
+        zapis <<endl;
+
+//        zapis <<tablica[0] <<" ";
+//        zapis <<tablica[1] <<" ";
+//        zapis <<tablica[2] <<endl;
+//        zapis <<tablica[3] <<" ";
+//        zapis <<tablica[4] <<" ";
+//        zapis <<tablica[5] <<endl;
+//        zapis <<tablica[6] <<" ";
+//        zapis <<tablica[7] <<" ";
+//        zapis <<tablica[8] <<endl <<endl;
+
+        start = start->next;
+    }
+    zapis.close();
 }
 
 QString MainWindow::intToQstring(int cipher)
