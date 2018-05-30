@@ -35,7 +35,7 @@ private:
     QString stringToQString (string text);
     void dataCheck ();
 
-    Node* start;    //chyba nie potrzebuje kopii, na razie przechowuje na wszelki wypadek
+    Node* start;
     Node* current;
     int initialMatrix[3][3];
     bool firstDraw;

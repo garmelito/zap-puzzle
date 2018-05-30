@@ -61,7 +61,6 @@ void MainWindow::on_pb_nextMove_clicked()
 
 void MainWindow::on_pb_wybierzPlik_clicked()
 {
-    ui->tb_komunikaty->clear();
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
     if (!succes)
     {
@@ -70,15 +69,10 @@ void MainWindow::on_pb_wybierzPlik_clicked()
     }
     else
         dataCheck();
-
-    //on_pb_nextMove_clicked();
-    //musze czesc wypisujaca przerzucic do nowej funkcji. Ale problemem jest zmiana tablicy[3][3] na [9]
 }
 
 void MainWindow::on_pb_wybierzDane_clicked()
 {
-    ui->tb_komunikaty->clear();
-
     initialMatrix[0][0] = QStringToInt(ui->lineEdit->text());
     initialMatrix[0][1] = QStringToInt(ui->lineEdit_2->text());
     initialMatrix[0][2] = QStringToInt(ui->lineEdit_3->text());
@@ -112,35 +106,34 @@ void MainWindow::on_pb_losuj_clicked()
 
     on_pb_wybierzDane_clicked();
 }
-
-//moge wyswietlac na line edit rowniez dane wprowadzone z pliku i rozwiazania
-//niech losuje do skutku
 void MainWindow::on_pb_zapiszDoPliku_clicked()
 {
-    //dodaj zabezpiecznie przed pozostawieniem pustego pola
-    //dodaj zabezpieczenie przed zlym rozszerzeniem pliku
-    //w takim wypadku musialbym przerywac wykonywanie zdarzenia. Jeszcze nw jak
-    ofstream zapis(ui->le_nazwaPlikuOut->text().toStdString());
-    while (start != nullptr)
+    if (ui->le_nazwaPlikuOut->text() != "")
     {
-        auto tablica = start->board.getMatrix();
-        for (int i=0; i<3; i++)
+        ofstream zapis(ui->le_nazwaPlikuOut->text().toStdString());
+        while (start != nullptr)
         {
-            for (int j=0; j<3; j++)
+            auto tablica = start->board.getMatrix();
+            for (int i=0; i<3; i++)
             {
-                if (tablica[i*3+j] != 9)
-                    zapis << tablica[i*3+j] <<" ";
-                else
-                    zapis <<"  ";
+                for (int j=0; j<3; j++)
+                {
+                    if (tablica[i*3+j] != 9)
+                        zapis << tablica[i*3+j] <<" ";
+                    else
+                        zapis <<"  ";
+                }
+                zapis <<endl;
             }
             zapis <<endl;
-        }
-        zapis <<endl;
 
-        start = start->next;
+            start = start->next;
+        }
+        zapis.close();
+        ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
     }
-    zapis.close();
-    ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
+    else
+        ui->tb_komunikaty->setText(stringToQString("Wpisz nazwe piku \n"));
 }
 
 QString MainWindow::intToQstring(int cipher)

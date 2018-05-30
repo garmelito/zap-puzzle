@@ -45,8 +45,6 @@ void draw(int table[], bool firstDraw)
     }
 }
 
-//kazdy ruch zmienia permutacje o parzysta ilosc. Dla ruchu w poziomie 0, a w pionie -2, 0 lub +2
-//numer rzedu pustej plytki potrzebny jest tylko dla plansz 4x4 i innych parzystych. Tutaj wprowadzal bledy
 bool solutionIsPosible(int matrix[][3])
 {
     int permutationInversions = 0;
