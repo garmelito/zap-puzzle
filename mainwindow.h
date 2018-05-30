@@ -1,12 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "algorithm.h"
+#include "node.h"
 
 #include <QMainWindow>
-#include <windows.h>
-#include <iostream>
-#include <sstream>
+
+using namespace std;
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +26,8 @@ private slots:
     void on_pb_wybierzPlik_clicked();
     void on_pb_wybierzDane_clicked();
     void on_pb_losuj_clicked();
+
+    void on_pb_zapiszDoPliku_clicked();
 
 private:
     QString intToQstring (int cipher);

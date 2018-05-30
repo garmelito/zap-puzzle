@@ -1,9 +1,9 @@
 #include "engine.h"
 
-#include <fstream>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 
 bool readFromFile(string nazwa, int matrix[][3])
 {

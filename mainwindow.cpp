@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#include "algorithm.h"
 #include "board.h"
+#include "engine.h"
 
+#include <fstream>
 #include <QTimer>
+#include <sstream>
 #include <stdlib.h>
-
-using namespace std;
-
-//moge pozostawiona we wpisywaniu pusta plytke spacje zminiac na 9
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,14 +33,13 @@ void MainWindow::on_pb_initialization_clicked()
     current = start;
 
     ui->pb_initialization->setEnabled(false);
-    //ui->pb_nextMove->setEnabled(true);    //najchetneiej pozbylbym sie tego przycisku
+    ui->pb_zapiszDoPliku->setEnabled(true);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_pb_nextMove_clicked()));
     timer->start(400);
 }
 
-//Nie umiem sie go pozbyc. Timer chce wywolywac slot
 void MainWindow::on_pb_nextMove_clicked()
 {
     if (current != nullptr)
@@ -64,7 +64,10 @@ void MainWindow::on_pb_wybierzPlik_clicked()
     ui->tb_komunikaty->clear();
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
     if (!succes)
+    {
         ui->tb_komunikaty->setText(stringToQString("Nie znalazlem pliku \n"));
+        ui->pb_initialization->setEnabled(false);
+    }
     else
         dataCheck();
 
@@ -110,6 +113,36 @@ void MainWindow::on_pb_losuj_clicked()
     on_pb_wybierzDane_clicked();
 }
 
+//moge wyswietlac na line edit rowniez dane wprowadzone z pliku i rozwiazania
+//niech losuje do skutku
+void MainWindow::on_pb_zapiszDoPliku_clicked()
+{
+    //dodaj zabezpiecznie przed pozostawieniem pustego pola
+    //dodaj zabezpieczenie przed zlym rozszerzeniem pliku
+    //w takim wypadku musialbym przerywac wykonywanie zdarzenia. Jeszcze nw jak
+    ofstream zapis(ui->le_nazwaPlikuOut->text().toStdString());
+    while (start != nullptr)
+    {
+        auto tablica = start->board.getMatrix();
+        for (int i=0; i<3; i++)
+        {
+            for (int j=0; j<3; j++)
+            {
+                if (tablica[i*3+j] != 9)
+                    zapis << tablica[i*3+j] <<" ";
+                else
+                    zapis <<"  ";
+            }
+            zapis <<endl;
+        }
+        zapis <<endl;
+
+        start = start->next;
+    }
+    zapis.close();
+    ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
+}
+
 QString MainWindow::intToQstring(int cipher)
 {
     stringstream stream;
@@ -135,9 +168,18 @@ QString MainWindow::stringToQString(string text)
 void MainWindow::dataCheck()
 {
     if (!inRules(initialMatrix))
+    {
         ui->tb_komunikaty->setText(stringToQString("Bledne dane. Wpisz inne \n"));
+        ui->pb_initialization->setEnabled(false);
+    }
     else if (!(solutionIsPosible(initialMatrix)))
+    {
         ui->tb_komunikaty->setText(stringToQString("Brak rozwiazania. Wpisz inne liczby \n"));
+        ui->pb_initialization->setEnabled(false);
+    }
     else
+    {
         ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
+        ui->pb_initialization->setEnabled(true);
+    }
 }
