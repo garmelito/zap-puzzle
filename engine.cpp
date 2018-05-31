@@ -184,9 +184,11 @@ void insertNode (Node *openset, Node* node)
  */
 void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_x)
 {
-    Node* node = openset->clone(luka, obok_y, obok_x, closedset);
-    if (!(alreadyInside(openset, node->getId()) || alreadyInside(closedset, node->getId())))
-        insertNode(openset, node);
+    Node* madeOne = new Node;
+    madeOne = openset->clone(luka, obok_y, obok_x, closedset);
+    //or *madeOne = *(openset->clone(luka, obok_y, obok_x, closedset));
+    if (!(alreadyInside(openset, madeOne->getId()) || alreadyInside(closedset, madeOne->getId())))
+        insertNode(openset, madeOne);
 }
 
 /**
