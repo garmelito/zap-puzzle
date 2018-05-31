@@ -1,0 +1,12 @@
+<map id="board.h" name="board.h">
+<area shape="rect" id="node2" href="$node_8h.html" title="node.h" alt="" coords="268,80,329,107"/>
+<area shape="rect" id="node4" href="$algorithm_8cpp.html" title="algorithm.cpp" alt="" coords="346,229,446,256"/>
+<area shape="rect" id="node5" href="$mainwindow_8cpp.html" title="mainwindow.cpp" alt="" coords="135,229,252,256"/>
+<area shape="rect" id="node7" href="$engine_8cpp.html" title="engine.cpp" alt="" coords="473,229,559,256"/>
+<area shape="rect" id="node11" href="$board_8cpp.html" title="board.cpp" alt="" coords="558,80,637,107"/>
+<area shape="rect" id="node3" href="$algorithm_8h.html" title="algorithm.h" alt="" coords="150,155,237,181"/>
+<area shape="rect" id="node6" href="$engine_8h.html" title="engine.h" alt="" coords="361,155,431,181"/>
+<area shape="rect" id="node8" href="$mainwindow_8h.html" title="mainwindow.h" alt="" coords="23,155,126,181"/>
+<area shape="rect" id="node10" href="$node_8cpp.html" title="node.cpp" alt="" coords="261,155,336,181"/>
+<area shape="rect" id="node9" href="$main_8cpp.html" title="main.cpp" alt="" coords="36,229,111,256"/>
+</map>

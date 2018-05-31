@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include "algorithm.h"
-#include "board.h"
 #include "engine.h"
 
 #include <fstream>
@@ -28,8 +27,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_initialization_clicked()
 {
-    Board initialBoard(initialMatrix);
-    start = algorithm(initialBoard);
+    Node initialNode(initialMatrix);
+    start = algorithm(initialNode);
     current = start;
 
     ui->pb_initialization->setEnabled(false);
@@ -44,7 +43,7 @@ void MainWindow::on_pb_nextMove_clicked()
 {
     if (current != nullptr)
     {
-        auto tablica = current->board.getMatrix();
+        auto tablica = current->getMatrix();
         ui->label_1->setText(intToQstring(tablica[0]));
         ui->label_2->setText(intToQstring(tablica[1]));
         ui->label_3->setText(intToQstring(tablica[2]));
@@ -123,7 +122,7 @@ void MainWindow::on_pb_zapiszDoPliku_clicked()
         Node* operating = start;
         while (operating != nullptr)
         {
-            auto tablica = operating->board.getMatrix();
+            auto tablica = operating->getMatrix();
             for (int i=0; i<3; i++)
             {
                 for (int j=0; j<3; j++)

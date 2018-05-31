@@ -1,0 +1,8 @@
+<map id="moveMaker" name="moveMaker">
+<area shape="rect" id="node2" href="$class_board.html#af1143e3a644db8052e1a5010bb1128d9" title="Board::clone" alt="" coords="143,5,238,32"/>
+<area shape="rect" id="node3" href="$engine_8cpp.html#a6c8efd4bee2af35e00fdd2ea45de534a" title="sprawdza czy element juz jest w danej liscie " alt="" coords="141,56,240,83"/>
+<area shape="rect" id="node4" href="$class_board.html#ad46291901cf39cefa566df88e035698d" title="Board::getId" alt="" coords="288,81,380,108"/>
+<area shape="rect" id="node5" href="$engine_8cpp.html#a2003599410ba609fc0c44227ca23f8f8" title="insertNode to insert node " alt="" coords="149,157,233,184"/>
+<area shape="rect" id="node6" href="$engine_8cpp.html#a1a4c210058ed4a0800daba218b38e117" title="wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po fullDis..." alt="" coords="293,157,375,184"/>
+<area shape="rect" id="node7" href="$class_node.html#acabd31001802300027a7f987577da462" title="Node::getFullDistance" alt="" coords="428,157,579,184"/>
+</map>

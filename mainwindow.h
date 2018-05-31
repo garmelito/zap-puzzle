@@ -26,7 +26,6 @@ private slots:
     void on_pb_wybierzPlik_clicked();
     void on_pb_wybierzDane_clicked();
     void on_pb_losuj_clicked();
-
     void on_pb_zapiszDoPliku_clicked();
 
 private:

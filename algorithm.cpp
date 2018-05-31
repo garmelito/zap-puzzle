@@ -1,6 +1,4 @@
 #include "algorithm.h"
-
-#include "board.h"
 #include "engine.h"
 #include "point.h"
 
@@ -13,16 +11,16 @@ using namespace std;
  * @param initialBoard - polozenie poczatkowe
  * @return wskaznik do pierwszego elementu listy koeljnych krokow rozwiazania
  */
-Node *algorithm(Board initialBoard)
+Node *algorithm(Node initialNode)
 {
     Node *openset = nullptr;
     Node *closedset = nullptr;
 
-    openset = new Node(initialBoard);
+    openset = initialNode;
     openset->next = nullptr;
 
     const int GOAL = 123456789;   //id ulozenia ktore jest rozwiazaniem
-    while (openset->board.getId() != GOAL)
+    while (openset->getId() != GOAL)
     {
         transferToClosedset(closedset, openset);    //kopiuje element ktorym sie teraz zajmuje do listy elementow odwiedzonych
         Point luka = openset->board.findEmptySpace();

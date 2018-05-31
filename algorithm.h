@@ -3,6 +3,6 @@
 
 #include "node.h"
 
-Node *algorithm(Board initialBoard);
+Node *algorithm(Node initialNode);
 
 #endif // ALGORITHM_H

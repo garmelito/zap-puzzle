@@ -1,4 +1,3 @@
-#include "board.h"
 #include "engine.h"
 
 #include <cmath>
@@ -117,7 +116,12 @@ bool inRules(int matrix[][3])
  */
 void transferToClosedset (Node *&closedset, Node *openset)
 {
-    Node *anew = new Node(openset->board);
+    auto tablica = openset->getMatrix();
+    int copy[3][3];
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+            copy[i][j] = tablica[i*3+j];
+    Node *anew = new Node(copy);
     *anew = *openset;
     anew->next = closedset;
     closedset = anew;
@@ -134,7 +138,7 @@ bool alreadyInside (Node *head, int id)
 {
     while (head != nullptr)
     {
-        if (head->board.getId() == id)
+        if (head->getId() == id)
             return true;
         head = head->next;
     }
@@ -143,15 +147,15 @@ bool alreadyInside (Node *head, int id)
 
 /**
  * @brief znajduje miejsce w liscie do umieszczenia wezla
- * @param fresh - nowy element
+ * @param node - nowy element
  * @param looking - porownywany element
  * @return wstawic nowy element za porownywany czy szukac dalej
  */
-bool insertHere (Node *fresh, Node *looking)
+bool insertHere (Node *node, Node *looking)
 {
     if (looking->next == nullptr)
         return true;
-    if (fresh->getFullDistance() > looking->next->getFullDistance())
+    if (node->getFullDistance() > looking->next->getFullDistance())
         return false;
     return true;
 }
@@ -159,32 +163,30 @@ bool insertHere (Node *fresh, Node *looking)
 /**
  * @brief tworzy nowy wezel do dodania do listy elementow otwartych
  * @param openset - pierwszy element listy elementow otwartych
- * @param parent - element z ktorego powstal aktualny
- * @param board - klasa z ulozeniem, jego id i przewidywana odlegloscia
+ * @param node - nowy element
  */
-void insertNode (Node *openset, Node *parent, Board board)
+void insertNode (Node *openset, Node* node)
 {
-    Node *fresh = new Node(board, parent);
     Node *looking = openset;
-    while (!insertHere(fresh, looking))
+    while (!insertHere(node, looking))
         looking = looking->next;
-    fresh->next = looking->next;
-    looking->next = fresh;
+    node->next = looking->next;
+    looking->next = node;
 }
 
 /**
  * @brief Umieszcza nowy element na liscie elementow otwartych
- * @param openset - wskaznik na pierwszy element listy elementow otwartych
- * @param closedset - wskaznik na pierwszy element listy elementow zamknietych
+ * @param openset - pierwszy element listy elementow otwartych
+ * @param closedset - pierwszy element listy elementow zamknietych - rodzic
  * @param luka - wspolzedne pustej plytki
  * @param obok_y - rzedna plytki obok pustej
  * @param obok_x - odcieta plytki obok pustej
  */
 void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_x)
 {
-    Board board = openset->board.clone(luka, obok_y, obok_x);
-    if (!(alreadyInside(openset, board.getId()) || alreadyInside(closedset, board.getId())))
-        insertNode(openset, closedset, board);
+    Node* node = openset->clone(luka, obok_y, obok_x, closedset);
+    if (!(alreadyInside(openset, node->getId()) || alreadyInside(closedset, node->getId())))
+        insertNode(openset, node);
 }
 
 /**
@@ -194,15 +196,27 @@ void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_
  */
 Node *reconstructPath (Node *openset)
 {
-    Node *head = new Node(openset->board);
+    auto tablica = openset->getMatrix();
+    int copy[3][3];
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+            copy[i][j] = tablica[i*3+j];
+
+    Node *head = new Node(copy);
     *head = *openset;
     head->next = nullptr;
 
     while (head->parent != nullptr)
     {
-        Node *current = new Node(head->parent->board);
+        auto tablica = head->parent->getMatrix();
+        int copy[3][3];
+        for (int i=0; i<3; i++)
+            for (int j=0; j<3; j++)
+                copy[i][j] = tablica[i*3+j];
+
+        Node *current = new Node(copy);
         *current = *(head->parent);
-        current ->next = head;
+        current -> next = head;
         head = current;
     }
     return head;

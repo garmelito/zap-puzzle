@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zap-puzzle: Plik źródłowy engine.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zap-puzzle
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Szukaj');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">engine.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="engine_8h.html">Idź do dokumentacji tego pliku.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ENGINE_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define ENGINE_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="node_8h.html">node.h</a>&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="point_8h.html">point.h</a>&quot;</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacestd.html">std</a>;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="engine_8h.html#a47cac4f2f64c978385eeaeb701a25045">readFromFile</a> (<span class="keywordtype">string</span> nazwa, <span class="keywordtype">int</span> matrix[][3]);</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> <a class="code" href="engine_8h.html#ae96673d0e8d75a0984de12177a90b7bc">draw</a> (<span class="keywordtype">int</span> table[]);</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="engine_8h.html#a3bcb65155d0810e38ae8aaf96dce2e40">solutionIsPosible</a>(<span class="keywordtype">int</span> matrix[][3]);</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="engine_8h.html#a73a73b629f3157dac864cad8261f3f0a">inRules</a>(<span class="keywordtype">int</span> matrix[][3]);</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="engine_8h.html#af77f5b59609a0c3741ea1f8288a0c404">transferToClosedset</a> (<a class="code" href="class_node.html">Node</a> *&amp;closedset, <a class="code" href="class_node.html">Node</a> *openset);</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> <a class="code" href="engine_8h.html#ab126e17bd00f22300d310c9fe516c69c">moveMaker</a> (<a class="code" href="class_node.html">Node</a> *openset, <a class="code" href="class_node.html">Node</a> *closedset, <a class="code" href="struct_point.html">Point</a> luka, <span class="keywordtype">int</span> obok_y, <span class="keywordtype">int</span> obok_x);</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<a class="code" href="class_node.html">Node</a> *<a class="code" href="engine_8h.html#a621510ba721513413d861df56b39da11">reconstructPath</a> (<a class="code" href="class_node.html">Node</a> *openset);</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> <a class="code" href="engine_8h.html#aa1cd27200c021bf97896b4bdf4d8a69c">extermination</a> (<a class="code" href="class_node.html">Node</a> *&amp;head);</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif // ENGINE_H</span></div><div class="ttc" id="node_8h_html"><div class="ttname"><a href="node_8h.html">node.h</a></div></div>
+<div class="ttc" id="engine_8h_html_a47cac4f2f64c978385eeaeb701a25045"><div class="ttname"><a href="engine_8h.html#a47cac4f2f64c978385eeaeb701a25045">readFromFile</a></div><div class="ttdeci">bool readFromFile(string nazwa, int matrix[][3])</div><div class="ttdoc">czyta poczatkowe ulozenie z pliku </div><div class="ttdef"><b>Definition:</b> engine.cpp:15</div></div>
+<div class="ttc" id="class_node_html"><div class="ttname"><a href="class_node.html">Node</a></div><div class="ttdoc">Poza informacjami o ulozeniu zawiera dane o przebytej odleglosci i daje sie ulozyc w liste...</div><div class="ttdef"><b>Definition:</b> node.h:9</div></div>
+<div class="ttc" id="point_8h_html"><div class="ttname"><a href="point_8h.html">point.h</a></div></div>
+<div class="ttc" id="engine_8h_html_aa1cd27200c021bf97896b4bdf4d8a69c"><div class="ttname"><a href="engine_8h.html#aa1cd27200c021bf97896b4bdf4d8a69c">extermination</a></div><div class="ttdeci">void extermination(Node *&amp;head)</div><div class="ttdoc">zwalnia pamiec zarezerwowana na liste </div><div class="ttdef"><b>Definition:</b> engine.cpp:215</div></div>
+<div class="ttc" id="engine_8h_html_ab126e17bd00f22300d310c9fe516c69c"><div class="ttname"><a href="engine_8h.html#ab126e17bd00f22300d310c9fe516c69c">moveMaker</a></div><div class="ttdeci">void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_x)</div><div class="ttdoc">Umieszcza nowy element na liscie elementow otwartych. </div><div class="ttdef"><b>Definition:</b> engine.cpp:183</div></div>
+<div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="struct_point_html"><div class="ttname"><a href="struct_point.html">Point</a></div><div class="ttdoc">wspolrzene punktu na plaszczyznie </div><div class="ttdef"><b>Definition:</b> point.h:8</div></div>
+<div class="ttc" id="engine_8h_html_a73a73b629f3157dac864cad8261f3f0a"><div class="ttname"><a href="engine_8h.html#a73a73b629f3157dac864cad8261f3f0a">inRules</a></div><div class="ttdeci">bool inRules(int matrix[][3])</div><div class="ttdoc">sprawdza czy zadne cyfry sie nie powtarzaja ani nie wystepuja niedozwolone znaki </div><div class="ttdef"><b>Definition:</b> engine.cpp:98</div></div>
+<div class="ttc" id="engine_8h_html_ae96673d0e8d75a0984de12177a90b7bc"><div class="ttname"><a href="engine_8h.html#ae96673d0e8d75a0984de12177a90b7bc">draw</a></div><div class="ttdeci">void draw(int table[])</div><div class="ttdoc">losuje poczatkowe polozenie </div><div class="ttdef"><b>Definition:</b> engine.cpp:52</div></div>
+<div class="ttc" id="engine_8h_html_af77f5b59609a0c3741ea1f8288a0c404"><div class="ttname"><a href="engine_8h.html#af77f5b59609a0c3741ea1f8288a0c404">transferToClosedset</a></div><div class="ttdeci">void transferToClosedset(Node *&amp;closedset, Node *openset)</div><div class="ttdoc">kopiuje element do listy elementow zamknietych </div><div class="ttdef"><b>Definition:</b> engine.cpp:118</div></div>
+<div class="ttc" id="engine_8h_html_a3bcb65155d0810e38ae8aaf96dce2e40"><div class="ttname"><a href="engine_8h.html#a3bcb65155d0810e38ae8aaf96dce2e40">solutionIsPosible</a></div><div class="ttdeci">bool solutionIsPosible(int matrix[][3])</div><div class="ttdoc">solutionIsPosible sprawdza czy dane ulozenie ma rozwiazanie </div><div class="ttdef"><b>Definition:</b> engine.cpp:69</div></div>
+<div class="ttc" id="engine_8h_html_a621510ba721513413d861df56b39da11"><div class="ttname"><a href="engine_8h.html#a621510ba721513413d861df56b39da11">reconstructPath</a></div><div class="ttdeci">Node * reconstructPath(Node *openset)</div><div class="ttdoc">tworzy liste z kolejnymi ulozeniami rozwiazania </div><div class="ttdef"><b>Definition:</b> engine.cpp:195</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano przez &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

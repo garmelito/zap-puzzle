@@ -1,0 +1,13 @@
+<map id="algorithm" name="algorithm">
+<area shape="rect" id="node2" href="$class_board.html#ad46291901cf39cefa566df88e035698d" title="Board::getId" alt="" coords="481,45,573,72"/>
+<area shape="rect" id="node3" href="$engine_8cpp.html#af77f5b59609a0c3741ea1f8288a0c404" title="kopiuje element do listy elementow zamknietych. Towrzy tam NOWY element ktoremu przepisuje wartosci ..." alt="" coords="139,45,276,72"/>
+<area shape="rect" id="node4" href="$class_board.html#a54da6fc60f075c894a85580df50cc1bb" title="Board::findEmptySpace" alt="" coords="128,96,287,123"/>
+<area shape="rect" id="node5" href="$engine_8cpp.html#ab126e17bd00f22300d310c9fe516c69c" title="moveMaker" alt="" coords="163,147,251,173"/>
+<area shape="rect" id="node11" href="$engine_8cpp.html#a621510ba721513413d861df56b39da11" title="reconstructPath" alt="" coords="150,197,265,224"/>
+<area shape="rect" id="node12" href="$engine_8cpp.html#aa1cd27200c021bf97896b4bdf4d8a69c" title="extermination " alt="" coords="157,248,257,275"/>
+<area shape="rect" id="node6" href="$class_board.html#af1143e3a644db8052e1a5010bb1128d9" title="Board::clone" alt="" coords="337,96,431,123"/>
+<area shape="rect" id="node7" href="$engine_8cpp.html#a6c8efd4bee2af35e00fdd2ea45de534a" title="sprawdza czy element juz jest w danej liscie " alt="" coords="335,147,433,173"/>
+<area shape="rect" id="node8" href="$engine_8cpp.html#a2003599410ba609fc0c44227ca23f8f8" title="insertNode to insert node " alt="" coords="342,197,426,224"/>
+<area shape="rect" id="node9" href="$engine_8cpp.html#a1a4c210058ed4a0800daba218b38e117" title="wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po fullDis..." alt="" coords="487,197,568,224"/>
+<area shape="rect" id="node10" href="$class_node.html#acabd31001802300027a7f987577da462" title="Node::getFullDistance" alt="" coords="621,197,772,224"/>
+</map>

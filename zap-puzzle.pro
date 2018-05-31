@@ -26,14 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    board.cpp \
     engine.cpp \
     node.cpp \
     algorithm.cpp
 
 HEADERS += \
         mainwindow.h \
-    board.h \
     engine.h \
     node.h \
     point.h \
