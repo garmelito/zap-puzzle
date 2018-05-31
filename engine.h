@@ -8,8 +8,13 @@
 
 using namespace std;
 
+/**
+  * \file engine.h
+  * \brief funkcje wymagane do pobrania danych, sprawdzenia ich i dzialania algorytmu A*
+  */
+
 bool readFromFile (string nazwa, int matrix[][3]);
-void draw (int table[], bool firstDraw);
+void draw (int table[]);
 
 bool solutionIsPosible(int matrix[][3]);
 bool inRules(int matrix[][3]);
@@ -19,10 +24,5 @@ void moveMaker (Node *openset, Node *closedset, Point luka, int obok_y, int obok
 
 Node *reconstructPath (Node *openset);
 void extermination (Node *&head);
-
-//potrzebne tylko do dzialania funkcji
-/*bool alreadyInside (Node *head, int id);
-void insertNode (Node *openset, Node *parent, int fRating, int board[][3], int idRating);
-bool insertHere (Node *fresh, Node *topic);*/
 
 #endif // ENGINE_H

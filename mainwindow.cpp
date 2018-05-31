@@ -26,6 +26,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief uruchamia algorytm, wlacza timer ktory zajmie sie wyswietleniem rozwiazania
+ */
 void MainWindow::on_pb_initialization_clicked()
 {
     Board initialBoard(initialMatrix);
@@ -40,6 +43,12 @@ void MainWindow::on_pb_initialization_clicked()
     timer->start(400);
 }
 
+/**
+ * @brief wyswietla nastepne ulozenie rozwiazania
+ *
+ * Wywolywany przez timer
+ * @bug przycisk nie istnieje. Nie jest potrzebny. Jednak timer musi wywolywac slot
+ */
 void MainWindow::on_pb_nextMove_clicked()
 {
     if (current != nullptr)
@@ -59,9 +68,11 @@ void MainWindow::on_pb_nextMove_clicked()
     }
 }
 
+/**
+ * @brief wczytuje plik
+ */
 void MainWindow::on_pb_wybierzPlik_clicked()
 {
-    ui->tb_komunikaty->clear();
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
     if (!succes)
     {
@@ -70,15 +81,13 @@ void MainWindow::on_pb_wybierzPlik_clicked()
     }
     else
         dataCheck();
-
-    //on_pb_nextMove_clicked();
-    //musze czesc wypisujaca przerzucic do nowej funkcji. Ale problemem jest zmiana tablicy[3][3] na [9]
 }
 
+/**
+ * @brief wczytuje dane z okna
+ */
 void MainWindow::on_pb_wybierzDane_clicked()
 {
-    ui->tb_komunikaty->clear();
-
     initialMatrix[0][0] = QStringToInt(ui->lineEdit->text());
     initialMatrix[0][1] = QStringToInt(ui->lineEdit_2->text());
     initialMatrix[0][2] = QStringToInt(ui->lineEdit_3->text());
@@ -92,12 +101,27 @@ void MainWindow::on_pb_wybierzDane_clicked()
     dataCheck();
 }
 
+/**
+ * @brief Losuje dane
+ *
+ * Do skutku. Do znalezienia wlasciwych
+ * @warning za pierwszym razem wywoluje srand(time(NULL));
+ */
 void MainWindow::on_pb_losuj_clicked()
 {
-    int table[9] ={0};
-    draw (table, firstDraw);
     if (firstDraw)
+    {
+        srand(time(NULL));
         firstDraw = false;
+    }
+
+    int table[9] = {0};
+    do{
+        draw (table);
+        for (int i=0; i<3; i++)
+            for (int j=0; j<3; j++)
+                initialMatrix[i][j] = table[i*3+j];
+    }while (!solutionIsPosible(initialMatrix));
 
     ui->lineEdit->setText(intToQstring(table[0]));
     ui->lineEdit_2->setText(intToQstring(table[1]));
@@ -113,34 +137,40 @@ void MainWindow::on_pb_losuj_clicked()
     on_pb_wybierzDane_clicked();
 }
 
-//moge wyswietlac na line edit rowniez dane wprowadzone z pliku i rozwiazania
-//niech losuje do skutku
+/**
+ * @brief Zapisuje dane do pliku
+ *
+ * Pozwala zapisac rozwiazanie do kilku roznych plikow, w ktorymkolwiek momencie po uruchomieniu algorytmu
+ */
 void MainWindow::on_pb_zapiszDoPliku_clicked()
 {
-    //dodaj zabezpiecznie przed pozostawieniem pustego pola
-    //dodaj zabezpieczenie przed zlym rozszerzeniem pliku
-    //w takim wypadku musialbym przerywac wykonywanie zdarzenia. Jeszcze nw jak
-    ofstream zapis(ui->le_nazwaPlikuOut->text().toStdString());
-    while (start != nullptr)
+    if (ui->le_nazwaPlikuOut->text() != "")
     {
-        auto tablica = start->board.getMatrix();
-        for (int i=0; i<3; i++)
+        ofstream zapis(ui->le_nazwaPlikuOut->text().toStdString());
+        Node* operating = start;
+        while (operating != nullptr)
         {
-            for (int j=0; j<3; j++)
+            auto tablica = operating->board.getMatrix();
+            for (int i=0; i<3; i++)
             {
-                if (tablica[i*3+j] != 9)
-                    zapis << tablica[i*3+j] <<" ";
-                else
-                    zapis <<"  ";
+                for (int j=0; j<3; j++)
+                {
+                    if (tablica[i*3+j] != 9)
+                        zapis << tablica[i*3+j] <<" ";
+                    else
+                        zapis <<"  ";
+                }
+                zapis <<endl;
             }
             zapis <<endl;
-        }
-        zapis <<endl;
 
-        start = start->next;
+            operating = operating->next;
+        }
+        zapis.close();
+        ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
     }
-    zapis.close();
-    ui->tb_komunikaty->setText(stringToQString("Powodzenie \n"));
+    else
+        ui->tb_komunikaty->setText(stringToQString("Wpisz nazwe piku \n"));
 }
 
 QString MainWindow::intToQstring(int cipher)
@@ -165,6 +195,11 @@ QString MainWindow::stringToQString(string text)
     return text.c_str();
 }
 
+/**
+ * @brief sprawwdza dane.
+ *
+ * Wypisuje komunikaty w oknie. Nie trzeba go czyscig bo nie dopisuje a zamienia tekst
+ */
 void MainWindow::dataCheck()
 {
     if (!inRules(initialMatrix))

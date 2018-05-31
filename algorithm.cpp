@@ -8,6 +8,11 @@
 
 using namespace std;
 
+/**
+ * @brief znajduje najkrotsza sciezke przy pomocy algorytmu A*
+ * @param initialBoard - polozenie poczatkowe
+ * @return wskaznik do pierwszego elementu listy koeljnych krokow rozwiazania
+ */
 Node *algorithm(Board initialBoard)
 {
     Node *openset = nullptr;

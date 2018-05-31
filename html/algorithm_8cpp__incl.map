@@ -1,0 +1,7 @@
+<map id="algorithm.cpp" name="algorithm.cpp">
+<area shape="rect" id="node2" href="$algorithm_8h.html" title="algorytm A* " alt="" coords="60,80,146,107"/>
+<area shape="rect" id="node4" href="$board_8h.html" title="klasa Board i jej metody " alt="" coords="34,229,100,256"/>
+<area shape="rect" id="node5" href="$point_8h.html" title="struktura Point " alt="" coords="36,304,98,331"/>
+<area shape="rect" id="node6" href="$engine_8h.html" title="funkcje wymagane do pobrania danych, sprawdzenia ich i dzialania algorytmu A* " alt="" coords="170,80,241,107"/>
+<area shape="rect" id="node3" href="$node_8h.html" title="klasa Node i jej metody " alt="" coords="66,155,127,181"/>
+</map>

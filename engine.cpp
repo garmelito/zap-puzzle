@@ -1,3 +1,4 @@
+#include "board.h"
 #include "engine.h"
 
 #include <cmath>
@@ -5,6 +6,12 @@
 #include <ctime>
 #include <fstream>
 
+/**
+ * @brief czyta poczatkowe ulozenie z pliku
+ * @param nazwa - nazwa pliku tekstowego
+ * @param matrix - tablica do korej zostaja wpisane dane wejsciowe
+ * @return czy udalo sie pobrac dane
+ */
 bool readFromFile(string nazwa, int matrix[][3])
 {
     ifstream input (nazwa);
@@ -19,7 +26,14 @@ bool readFromFile(string nazwa, int matrix[][3])
     return false;
 }
 
-//used to draw without repeats
+/**
+ * @brief Sprawdza czy liczba pojawia sie w tablicy do indexu i
+ * @param drawn - porownywana liczba
+ * @param table - przeszukiwana tablica
+ * @param n - index do ktorego tablica jest przeszukiwana
+ * @return czy znaleziono element w tablicy
+ * @note wykorzystywana w funkcji draw do losowania bez powtorzen
+ */
 bool inside (int drawn, int table[], int n)
 {
     for (int i=0; i<n; i++)
@@ -30,11 +44,13 @@ bool inside (int drawn, int table[], int n)
     return false;
 }
 
-void draw(int table[], bool firstDraw)
+/**
+ * @brief losuje poczatkowe polozenie
+ * @param tablica z wylosowanymi elementami
+ * @return tablice przez referencje
+ */
+void draw(int table[])
 {
-    if (firstDraw)
-        srand(time(NULL));
-
     int drawn;
     for (int i=0; i<9; i++)
     {
@@ -45,8 +61,12 @@ void draw(int table[], bool firstDraw)
     }
 }
 
-//kazdy ruch zmienia permutacje o parzysta ilosc. Dla ruchu w poziomie 0, a w pionie -2, 0 lub +2
-//numer rzedu pustej plytki potrzebny jest tylko dla plansz 4x4 i innych parzystych. Tutaj wprowadzal bledy
+/**
+ * @brief sprawdza czy dane ulozenie ma rozwiazanie
+ * @note kazde ulozenie ma charakterystyczna liczbe permutacji. Ruchy zmieniaja ja o przysta ilosc. Rozwiazanie ma parzysta liczbe permutacji,
+ * wiec polozenie poczatkowe tez musi miec. Mozna rozwiazac tylko polowe ulozen poczatkowych
+ * @return czy ulozenie ma rozwiazanie
+ */
 bool solutionIsPosible(int matrix[][3])
 {
     int permutationInversions = 0;
@@ -70,6 +90,12 @@ bool solutionIsPosible(int matrix[][3])
     return false;
 }
 
+///
+/**
+ * @brief sprawdza czy zadne cyfry sie nie powtarzaja ani nie wystepuja niedozwolone znaki
+ * @param matrix - sprawdzana tablica
+ * @return czy dane sa poprawne
+ */
 bool inRules(int matrix[][3])
 {
     bool seen[9];
@@ -83,7 +109,13 @@ bool inRules(int matrix[][3])
     return true;
 }
 
-//kopiuje element do listy elementow odwiedzonych. Towrzy tam NOWY element ktoremu przepisuje wartosci
+/**
+ * @brief kopiuje element do listy elementow zamknietych
+ *
+ * Towrzy tam NOWY element ktoremu przepisuje wartosci
+ * @param closedset - glowa listy elementow zamknietych
+ * @param openset - glowa listy elementow otwartych
+ */
 void transferToClosedset (Node *&closedset, Node *openset)
 {
     Node *anew = new Node(openset->board);
@@ -92,7 +124,13 @@ void transferToClosedset (Node *&closedset, Node *openset)
     closedset = anew;
 }
 
-//sprawdza czy element juz jest w danej liscie
+/**
+ * @brief sprawdza czy element juz jest wpisany do listy
+ * @param head - glowa listy
+ * @param id - identyfikator po ktorym dane sa porownywane
+ * @return czy znaleziono taki element w liscie
+ * @note moze sie zdarzyc ze drugi raz innym sposobem znajde to samo ulozenie. Nie chce dodac dubla
+ */
 bool alreadyInside (Node *head, int id)
 {
     while (head != nullptr)
@@ -104,7 +142,12 @@ bool alreadyInside (Node *head, int id)
     return false;
 }
 
-//wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po fullDistance
+/**
+ * @brief znajduje miejsce w liscie do umieszczenia wezla
+ * @param fresh - nowy element
+ * @param looking - porownywany element
+ * @return wstawic nowy element za porownywany czy szukac dalej
+ */
 bool insertHere (Node *fresh, Node *looking)
 {
     if (looking->next == nullptr)
@@ -114,10 +157,15 @@ bool insertHere (Node *fresh, Node *looking)
     return true;
 }
 
-//tworzy nowy wezel do liscie dostepnych
-void insertNode (Node *openset, Node *parent, Board environment)
+/**
+ * @brief tworzy nowy wezel do dodania do listy elementow otwartych
+ * @param openset - glowa listy elementow otwartych
+ * @param parent - element z ktorego powstal aktualny
+ * @param board - klasa z ulozeniem, jego id i przewidywana odlegloscia
+ */
+void insertNode (Node *openset, Node *parent, Board board)
 {
-    Node *fresh = new Node(environment, parent);
+    Node *fresh = new Node(board, parent);
     Node *looking = openset;
     while (!insertHere(fresh, looking))
         looking = looking->next;
@@ -125,14 +173,26 @@ void insertNode (Node *openset, Node *parent, Board environment)
     looking->next = fresh;
 }
 
-//Umieszcza nowe elementy na liscie dostepnych mozliwosci
+/**
+ * @brief Umieszcza nowy element na liscie elementow otwartych
+ * @param openset - glowa listy elementow otwartych
+ * @param closedset - glowa listy elementow zamknietych
+ * @param luka - wspolzedne pustej plytki
+ * @param obok_y - rzedna plytki obok pustej
+ * @param obok_x - odcieta plytki obok pustej
+ */
 void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_x)
 {
-    Board environment = openset->board.clone(luka, obok_y, obok_x);
-    if (!(alreadyInside(openset, environment.getId()) || alreadyInside(closedset, environment.getId())))
-        insertNode(openset, closedset, environment);
+    Board board = openset->board.clone(luka, obok_y, obok_x);
+    if (!(alreadyInside(openset, board.getId()) || alreadyInside(closedset, board.getId())))
+        insertNode(openset, closedset, board);
 }
 
+/**
+ * @brief tworzy liste z kolejnymi ulozeniami rozwiazania
+ * @param openset - glowa listy elementow otwartych - tutaj juz ten z rozwiazaniem
+ * @return glowa listy z kolejnymi krokami rozwiazania
+ */
 Node *reconstructPath (Node *openset)
 {
     Node *head = new Node(openset->board);
@@ -149,6 +209,10 @@ Node *reconstructPath (Node *openset)
     return head;
 }
 
+/**
+ * @brief zwalnia pamiec zarezerwowana na liste
+ * @param head - glowa listy do usuniecia
+ */
 void extermination (Node *&head)
 {
     Node *topic = head;
