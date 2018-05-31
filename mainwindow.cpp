@@ -26,6 +26,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief uruchamia algorytm, wlacza timer ktory zajmie sie wyswietleniem rozwiazania
+ */
 void MainWindow::on_pb_initialization_clicked()
 {
     Board initialBoard(initialMatrix);
@@ -40,6 +43,12 @@ void MainWindow::on_pb_initialization_clicked()
     timer->start(400);
 }
 
+/**
+ * @brief wyswietla nastepne ulozenie rozwiazania
+ *
+ * Wywolywany przez timer
+ * @bug przycisk nie istnieje. Nie jest potrzebny. Jednak timer musi wywolywac slot
+ */
 void MainWindow::on_pb_nextMove_clicked()
 {
     if (current != nullptr)
@@ -59,6 +68,9 @@ void MainWindow::on_pb_nextMove_clicked()
     }
 }
 
+/**
+ * @brief wczytuje plik
+ */
 void MainWindow::on_pb_wybierzPlik_clicked()
 {
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
@@ -71,6 +83,9 @@ void MainWindow::on_pb_wybierzPlik_clicked()
         dataCheck();
 }
 
+/**
+ * @brief wczytuje dane z okna
+ */
 void MainWindow::on_pb_wybierzDane_clicked()
 {
     initialMatrix[0][0] = QStringToInt(ui->lineEdit->text());
@@ -86,6 +101,12 @@ void MainWindow::on_pb_wybierzDane_clicked()
     dataCheck();
 }
 
+/**
+ * @brief Losuje dane
+ *
+ * Do skutku. Do znalezienia wlasciwych
+ * @warning za pierwszym razem wywoluje srand(time(NULL));
+ */
 void MainWindow::on_pb_losuj_clicked()
 {
     if (firstDraw)
@@ -115,6 +136,12 @@ void MainWindow::on_pb_losuj_clicked()
 
     on_pb_wybierzDane_clicked();
 }
+
+/**
+ * @brief Zapisuje dane do pliku
+ *
+ * Pozwala zapisac rozwiazanie do kilku roznych plikow, w ktorymkolwiek momencie po uruchomieniu algorytmu
+ */
 void MainWindow::on_pb_zapiszDoPliku_clicked()
 {
     if (ui->le_nazwaPlikuOut->text() != "")
@@ -168,6 +195,11 @@ QString MainWindow::stringToQString(string text)
     return text.c_str();
 }
 
+/**
+ * @brief sprawwdza dane.
+ *
+ * Wypisuje komunikaty w oknie. Nie trzeba go czyscig bo nie dopisuje a zamienia tekst
+ */
 void MainWindow::dataCheck()
 {
     if (!inRules(initialMatrix))

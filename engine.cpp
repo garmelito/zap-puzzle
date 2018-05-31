@@ -62,8 +62,9 @@ void draw(int table[])
 }
 
 /**
- * @brief solutionIsPosible sprawdza czy dane ulozenie ma rozwiazanie
- * @note kazde ulozenie ma charakterystyczna liczbe permutacji. Ruchy zmieniaja ja o przysta ilosc. Do rozwiazania da sie doprowadzic tylko poloze ulozen poczatkowych
+ * @brief sprawdza czy dane ulozenie ma rozwiazanie
+ * @note kazde ulozenie ma charakterystyczna liczbe permutacji. Ruchy zmieniaja ja o przysta ilosc. Rozwiazanie ma parzysta liczbe permutacji,
+ * wiec polozenie poczatkowe tez musi miec. Mozna rozwiazac tylko polowe ulozen poczatkowych
  * @return czy ulozenie ma rozwiazanie
  */
 bool solutionIsPosible(int matrix[][3])
@@ -112,8 +113,8 @@ bool inRules(int matrix[][3])
  * @brief kopiuje element do listy elementow zamknietych
  *
  * Towrzy tam NOWY element ktoremu przepisuje wartosci
- * @param closedset - wskaznik do pierwszego elementu listy elementow zamknietych
- * @param openset - wskaznik do pierwszego elementu listy elementow otwartych
+ * @param closedset - glowa listy elementow zamknietych
+ * @param openset - glowa listy elementow otwartych
  */
 void transferToClosedset (Node *&closedset, Node *openset)
 {
@@ -125,7 +126,7 @@ void transferToClosedset (Node *&closedset, Node *openset)
 
 /**
  * @brief sprawdza czy element juz jest wpisany do listy
- * @param head - wskaznik do pierwszego elemtu listy
+ * @param head - glowa listy
  * @param id - identyfikator po ktorym dane sa porownywane
  * @return czy znaleziono taki element w liscie
  * @note moze sie zdarzyc ze drugi raz innym sposobem znajde to samo ulozenie. Nie chce dodac dubla
@@ -158,7 +159,7 @@ bool insertHere (Node *fresh, Node *looking)
 
 /**
  * @brief tworzy nowy wezel do dodania do listy elementow otwartych
- * @param openset - pierwszy element listy elementow otwartych
+ * @param openset - glowa listy elementow otwartych
  * @param parent - element z ktorego powstal aktualny
  * @param board - klasa z ulozeniem, jego id i przewidywana odlegloscia
  */
@@ -174,8 +175,8 @@ void insertNode (Node *openset, Node *parent, Board board)
 
 /**
  * @brief Umieszcza nowy element na liscie elementow otwartych
- * @param openset - wskaznik na pierwszy element listy elementow otwartych
- * @param closedset - wskaznik na pierwszy element listy elementow zamknietych
+ * @param openset - glowa listy elementow otwartych
+ * @param closedset - glowa listy elementow zamknietych
  * @param luka - wspolzedne pustej plytki
  * @param obok_y - rzedna plytki obok pustej
  * @param obok_x - odcieta plytki obok pustej
@@ -189,8 +190,8 @@ void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_
 
 /**
  * @brief tworzy liste z kolejnymi ulozeniami rozwiazania
- * @param openset - pierwszy element listy elementow otwartych - tutaj juz ten z rozwiazaniem
- * @return wskaznik do pierwszego elementu listy z kolejnymi krokami rozwiazania
+ * @param openset - glowa listy elementow otwartych - tutaj juz ten z rozwiazaniem
+ * @return glowa listy z kolejnymi krokami rozwiazania
  */
 Node *reconstructPath (Node *openset)
 {
@@ -210,7 +211,7 @@ Node *reconstructPath (Node *openset)
 
 /**
  * @brief zwalnia pamiec zarezerwowana na liste
- * @param wskaznik do pierwszego elemntu listy
+ * @param head - glowa listy do usuniecia
  */
 void extermination (Node *&head)
 {

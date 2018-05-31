@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/**
+ * @brief konstruktor
+ * @param tablica z ulozeniem
+ */
 Board::Board(int matrix[][3])
 {
     for (int i=0; i<3; i++)
@@ -14,7 +18,26 @@ Board::Board(int matrix[][3])
     predictDistanceLeft();
 }
 
-//tworzy nowa tablice w ktorej na miejsce luki (9) wchodzi plytka obok
+/**
+ * @brief znajduje pusta plytke
+ * @return obie wspolrzedne luki
+ */
+Point Board::findEmptySpace()
+{
+    for (int y=0; y<3; y++)
+        for (int x=0; x<3; x++)
+            if (matrix_[y][x] == 9)
+                return Point{x,y};
+    throw "should never reach this point";  //zapobiega wyskakiwaniu niepotrzebnego ostrzezenia
+}
+
+/**
+ * @brief tworzy nowa tablice w ktorej na miejsce luki wchodzi plytka obok
+ * @param luka - obie wspolrzedne luki
+ * @param obok_y - rzedna miejsca obok
+ * @param obok_x - odcieta plytki obok
+ * @return obiekt od tablicy z przesunietym elementem
+ */
 Board Board::clone(Point luka, int obok_y, int obok_x)
 {
     int newSlab[3][3];
@@ -30,15 +53,6 @@ Board Board::clone(Point luka, int obok_y, int obok_x)
 const int *Board::getMatrix() const
 {
     return &matrix_[0][0];
-}
-
-Point Board::findEmptySpace()
-{
-    for (int y=0; y<3; y++)
-        for (int x=0; x<3; x++)
-            if (matrix_[y][x] == 9)
-                return Point{x,y};
-    throw "should never reach this point";
 }
 
 int Board::getId() const

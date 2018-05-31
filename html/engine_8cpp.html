@@ -1,0 +1,565 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zap-puzzle: Dokumentacja pliku engine.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zap-puzzle
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Szukaj');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Funkcje</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentacja pliku engine.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="board_8h_source.html">board.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="engine_8h_source.html">engine.h</a>&quot;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;ctime&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Wykres zależności załączania dla engine.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="engine_8cpp__incl.png" border="0" usemap="#engine_8cpp" alt=""/></div>
+<map name="engine_8cpp" id="engine_8cpp">
+<area shape="rect" id="node2" href="board_8h.html" title="klasa Board i jej metody " alt="" coords="19,229,84,256"/>
+<area shape="rect" id="node4" href="engine_8h.html" title="funkcje wymagane do pobrania danych, sprawdzenia ich i dzialania algorytmu A* " alt="" coords="55,80,126,107"/>
+<area shape="rect" id="node3" href="point_8h.html" title="struktura Point " alt="" coords="56,304,117,331"/>
+<area shape="rect" id="node5" href="node_8h.html" title="klasa Node i jej metody " alt="" coords="24,155,85,181"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funkcje</h2></td></tr>
+<tr class="memitem:a47cac4f2f64c978385eeaeb701a25045"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a47cac4f2f64c978385eeaeb701a25045">readFromFile</a> (string nazwa, int matrix[][3])</td></tr>
+<tr class="memdesc:a47cac4f2f64c978385eeaeb701a25045"><td class="mdescLeft">&#160;</td><td class="mdescRight">czyta poczatkowe ulozenie z pliku  <a href="#a47cac4f2f64c978385eeaeb701a25045">Więcej...</a><br /></td></tr>
+<tr class="separator:a47cac4f2f64c978385eeaeb701a25045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a2a0a90c3b2676e963be1860308d3bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a1a2a0a90c3b2676e963be1860308d3bf">inside</a> (int drawn, int table[], int n)</td></tr>
+<tr class="memdesc:a1a2a0a90c3b2676e963be1860308d3bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sprawdza czy liczba pojawia sie w tablicy do indexu i.  <a href="#a1a2a0a90c3b2676e963be1860308d3bf">Więcej...</a><br /></td></tr>
+<tr class="separator:a1a2a0a90c3b2676e963be1860308d3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae96673d0e8d75a0984de12177a90b7bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#ae96673d0e8d75a0984de12177a90b7bc">draw</a> (int table[])</td></tr>
+<tr class="memdesc:ae96673d0e8d75a0984de12177a90b7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">losuje poczatkowe polozenie  <a href="#ae96673d0e8d75a0984de12177a90b7bc">Więcej...</a><br /></td></tr>
+<tr class="separator:ae96673d0e8d75a0984de12177a90b7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bcb65155d0810e38ae8aaf96dce2e40"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a3bcb65155d0810e38ae8aaf96dce2e40">solutionIsPosible</a> (int matrix[][3])</td></tr>
+<tr class="memdesc:a3bcb65155d0810e38ae8aaf96dce2e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">sprawdza czy dane ulozenie ma rozwiazanie  <a href="#a3bcb65155d0810e38ae8aaf96dce2e40">Więcej...</a><br /></td></tr>
+<tr class="separator:a3bcb65155d0810e38ae8aaf96dce2e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73a73b629f3157dac864cad8261f3f0a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a73a73b629f3157dac864cad8261f3f0a">inRules</a> (int matrix[][3])</td></tr>
+<tr class="memdesc:a73a73b629f3157dac864cad8261f3f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sprawdza czy zadne cyfry sie nie powtarzaja ani nie wystepuja niedozwolone znaki  <a href="#a73a73b629f3157dac864cad8261f3f0a">Więcej...</a><br /></td></tr>
+<tr class="separator:a73a73b629f3157dac864cad8261f3f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af77f5b59609a0c3741ea1f8288a0c404"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#af77f5b59609a0c3741ea1f8288a0c404">transferToClosedset</a> (<a class="el" href="class_node.html">Node</a> *&amp;closedset, <a class="el" href="class_node.html">Node</a> *openset)</td></tr>
+<tr class="memdesc:af77f5b59609a0c3741ea1f8288a0c404"><td class="mdescLeft">&#160;</td><td class="mdescRight">kopiuje element do listy elementow zamknietych  <a href="#af77f5b59609a0c3741ea1f8288a0c404">Więcej...</a><br /></td></tr>
+<tr class="separator:af77f5b59609a0c3741ea1f8288a0c404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c8efd4bee2af35e00fdd2ea45de534a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a6c8efd4bee2af35e00fdd2ea45de534a">alreadyInside</a> (<a class="el" href="class_node.html">Node</a> *head, int id)</td></tr>
+<tr class="memdesc:a6c8efd4bee2af35e00fdd2ea45de534a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sprawdza czy element juz jest wpisany do listy  <a href="#a6c8efd4bee2af35e00fdd2ea45de534a">Więcej...</a><br /></td></tr>
+<tr class="separator:a6c8efd4bee2af35e00fdd2ea45de534a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a4c210058ed4a0800daba218b38e117"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a1a4c210058ed4a0800daba218b38e117">insertHere</a> (<a class="el" href="class_node.html">Node</a> *fresh, <a class="el" href="class_node.html">Node</a> *looking)</td></tr>
+<tr class="memdesc:a1a4c210058ed4a0800daba218b38e117"><td class="mdescLeft">&#160;</td><td class="mdescRight">znajduje miejsce w liscie do umieszczenia wezla  <a href="#a1a4c210058ed4a0800daba218b38e117">Więcej...</a><br /></td></tr>
+<tr class="separator:a1a4c210058ed4a0800daba218b38e117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad314030b3277f57b0846898467f96f12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#ad314030b3277f57b0846898467f96f12">insertNode</a> (<a class="el" href="class_node.html">Node</a> *openset, <a class="el" href="class_node.html">Node</a> *parent, <a class="el" href="class_board.html">Board</a> board)</td></tr>
+<tr class="memdesc:ad314030b3277f57b0846898467f96f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">tworzy nowy wezel do dodania do listy elementow otwartych  <a href="#ad314030b3277f57b0846898467f96f12">Więcej...</a><br /></td></tr>
+<tr class="separator:ad314030b3277f57b0846898467f96f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab126e17bd00f22300d310c9fe516c69c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#ab126e17bd00f22300d310c9fe516c69c">moveMaker</a> (<a class="el" href="class_node.html">Node</a> *openset, <a class="el" href="class_node.html">Node</a> *closedset, <a class="el" href="struct_point.html">Point</a> luka, int obok_y, int obok_x)</td></tr>
+<tr class="memdesc:ab126e17bd00f22300d310c9fe516c69c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Umieszcza nowy element na liscie elementow otwartych.  <a href="#ab126e17bd00f22300d310c9fe516c69c">Więcej...</a><br /></td></tr>
+<tr class="separator:ab126e17bd00f22300d310c9fe516c69c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a621510ba721513413d861df56b39da11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a621510ba721513413d861df56b39da11">reconstructPath</a> (<a class="el" href="class_node.html">Node</a> *openset)</td></tr>
+<tr class="memdesc:a621510ba721513413d861df56b39da11"><td class="mdescLeft">&#160;</td><td class="mdescRight">tworzy liste z kolejnymi ulozeniami rozwiazania  <a href="#a621510ba721513413d861df56b39da11">Więcej...</a><br /></td></tr>
+<tr class="separator:a621510ba721513413d861df56b39da11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1cd27200c021bf97896b4bdf4d8a69c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#aa1cd27200c021bf97896b4bdf4d8a69c">extermination</a> (<a class="el" href="class_node.html">Node</a> *&amp;head)</td></tr>
+<tr class="memdesc:aa1cd27200c021bf97896b4bdf4d8a69c"><td class="mdescLeft">&#160;</td><td class="mdescRight">zwalnia pamiec zarezerwowana na liste  <a href="#aa1cd27200c021bf97896b4bdf4d8a69c">Więcej...</a><br /></td></tr>
+<tr class="separator:aa1cd27200c021bf97896b4bdf4d8a69c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Dokumentacja funkcji</h2>
+<a id="a6c8efd4bee2af35e00fdd2ea45de534a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c8efd4bee2af35e00fdd2ea45de534a">&#9670;&nbsp;</a></span>alreadyInside()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alreadyInside </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>head</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>sprawdza czy element juz jest wpisany do listy </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">head</td><td>- glowa listy </td></tr>
+    <tr><td class="paramname">id</td><td>- identyfikator po ktorym dane sa porownywane </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>czy znaleziono taki element w liscie </dd></dl>
+<dl class="section note"><dt>Nota</dt><dd>moze sie zdarzyc ze drugi raz innym sposobem znajde to samo ulozenie. Nie chce dodac dubla </dd></dl>
+
+</div>
+</div>
+<a id="ae96673d0e8d75a0984de12177a90b7bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae96673d0e8d75a0984de12177a90b7bc">&#9670;&nbsp;</a></span>draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void draw </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>table</em>[]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>losuje poczatkowe polozenie </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tablica</td><td>z wylosowanymi elementami </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>tablice przez referencje </dd></dl>
+
+</div>
+</div>
+<a id="aa1cd27200c021bf97896b4bdf4d8a69c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1cd27200c021bf97896b4bdf4d8a69c">&#9670;&nbsp;</a></span>extermination()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void extermination </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&amp;&#160;</td>
+          <td class="paramname"><em>head</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>zwalnia pamiec zarezerwowana na liste </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">head</td><td>- glowa listy do usuniecia </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a73a73b629f3157dac864cad8261f3f0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73a73b629f3157dac864cad8261f3f0a">&#9670;&nbsp;</a></span>inRules()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool inRules </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>matrix</em>[][3]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>sprawdza czy zadne cyfry sie nie powtarzaja ani nie wystepuja niedozwolone znaki </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">matrix</td><td>- sprawdzana tablica </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>czy dane sa poprawne </dd></dl>
+
+</div>
+</div>
+<a id="a1a4c210058ed4a0800daba218b38e117"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a4c210058ed4a0800daba218b38e117">&#9670;&nbsp;</a></span>insertHere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool insertHere </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>fresh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>looking</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>znajduje miejsce w liscie do umieszczenia wezla </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fresh</td><td>- nowy element </td></tr>
+    <tr><td class="paramname">looking</td><td>- porownywany element </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>wstawic nowy element za porownywany czy szukac dalej </dd></dl>
+
+</div>
+</div>
+<a id="ad314030b3277f57b0846898467f96f12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad314030b3277f57b0846898467f96f12">&#9670;&nbsp;</a></span>insertNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void insertNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>openset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_board.html">Board</a>&#160;</td>
+          <td class="paramname"><em>board</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>tworzy nowy wezel do dodania do listy elementow otwartych </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">openset</td><td>- glowa listy elementow otwartych </td></tr>
+    <tr><td class="paramname">parent</td><td>- element z ktorego powstal aktualny </td></tr>
+    <tr><td class="paramname">board</td><td>- klasa z ulozeniem, jego id i przewidywana odlegloscia </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1a2a0a90c3b2676e963be1860308d3bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a2a0a90c3b2676e963be1860308d3bf">&#9670;&nbsp;</a></span>inside()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool inside </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>drawn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>table</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sprawdza czy liczba pojawia sie w tablicy do indexu i. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">drawn</td><td>- porownywana liczba </td></tr>
+    <tr><td class="paramname">table</td><td>- przeszukiwana tablica </td></tr>
+    <tr><td class="paramname">n</td><td>- index do ktorego tablica jest przeszukiwana </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>czy znaleziono element w tablicy </dd></dl>
+<dl class="section note"><dt>Nota</dt><dd>wykorzystywana w funkcji draw do losowania bez powtorzen </dd></dl>
+
+</div>
+</div>
+<a id="ab126e17bd00f22300d310c9fe516c69c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab126e17bd00f22300d310c9fe516c69c">&#9670;&nbsp;</a></span>moveMaker()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moveMaker </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>openset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>closedset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_point.html">Point</a>&#160;</td>
+          <td class="paramname"><em>luka</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>obok_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>obok_x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Umieszcza nowy element na liscie elementow otwartych. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">openset</td><td>- glowa listy elementow otwartych </td></tr>
+    <tr><td class="paramname">closedset</td><td>- glowa listy elementow zamknietych </td></tr>
+    <tr><td class="paramname">luka</td><td>- wspolzedne pustej plytki </td></tr>
+    <tr><td class="paramname">obok_y</td><td>- rzedna plytki obok pustej </td></tr>
+    <tr><td class="paramname">obok_x</td><td>- odcieta plytki obok pustej </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a47cac4f2f64c978385eeaeb701a25045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47cac4f2f64c978385eeaeb701a25045">&#9670;&nbsp;</a></span>readFromFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool readFromFile </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>nazwa</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>matrix</em>[][3]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>czyta poczatkowe ulozenie z pliku </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nazwa</td><td>- nazwa pliku tekstowego </td></tr>
+    <tr><td class="paramname">matrix</td><td>- tablica do korej zostaja wpisane dane wejsciowe </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>czy udalo sie pobrac dane </dd></dl>
+
+</div>
+</div>
+<a id="a621510ba721513413d861df56b39da11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a621510ba721513413d861df56b39da11">&#9670;&nbsp;</a></span>reconstructPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_node.html">Node</a>* reconstructPath </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>openset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>tworzy liste z kolejnymi ulozeniami rozwiazania </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">openset</td><td>- glowa listy elementow otwartych - tutaj juz ten z rozwiazaniem </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>glowa listy z kolejnymi krokami rozwiazania </dd></dl>
+
+</div>
+</div>
+<a id="a3bcb65155d0810e38ae8aaf96dce2e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bcb65155d0810e38ae8aaf96dce2e40">&#9670;&nbsp;</a></span>solutionIsPosible()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool solutionIsPosible </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>matrix</em>[][3]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>sprawdza czy dane ulozenie ma rozwiazanie </p>
+<dl class="section note"><dt>Nota</dt><dd>kazde ulozenie ma charakterystyczna liczbe permutacji. Ruchy zmieniaja ja o przysta ilosc. Rozwiazanie ma parzysta liczbe permutacji, wiec polozenie poczatkowe tez musi miec. Mozna rozwiazac tylko polowe ulozen poczatkowych </dd></dl>
+<dl class="section return"><dt>Zwraca</dt><dd>czy ulozenie ma rozwiazanie </dd></dl>
+
+</div>
+</div>
+<a id="af77f5b59609a0c3741ea1f8288a0c404"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af77f5b59609a0c3741ea1f8288a0c404">&#9670;&nbsp;</a></span>transferToClosedset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void transferToClosedset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&amp;&#160;</td>
+          <td class="paramname"><em>closedset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>openset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>kopiuje element do listy elementow zamknietych </p>
+<p>Towrzy tam NOWY element ktoremu przepisuje wartosci </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">closedset</td><td>- glowa listy elementow zamknietych </td></tr>
+    <tr><td class="paramname">openset</td><td>- glowa listy elementow otwartych </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano przez &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

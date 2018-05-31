@@ -7,10 +7,18 @@
 
 using namespace std;
 
+/**
+  * \file mainwindow.h
+  * \brief glowne okno programu
+  */
+
 namespace Ui {
 class MainWindow;
 }
 
+/**
+ * @brief Glowne okno
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,7 +34,6 @@ private slots:
     void on_pb_wybierzPlik_clicked();
     void on_pb_wybierzDane_clicked();
     void on_pb_losuj_clicked();
-
     void on_pb_zapiszDoPliku_clicked();
 
 private:
@@ -35,10 +42,10 @@ private:
     QString stringToQString (string text);
     void dataCheck ();
 
-    Node* start;
-    Node* current;
-    int initialMatrix[3][3];
-    bool firstDraw;
+    Node* start;                ///<glowa listy z rozwiazaniem
+    Node* current;              ///<aktualnie wyswietlany element
+    int initialMatrix[3][3];    ///<tablica na dane wejsciowe
+    bool firstDraw;             ///<czy to pierwsze losowanie
 };
 
 

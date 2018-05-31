@@ -8,6 +8,11 @@
 
 using namespace std;
 
+/**
+  * \file engine.h
+  * \brief funkcje wymagane do pobrania danych, sprawdzenia ich i dzialania algorytmu A*
+  */
+
 bool readFromFile (string nazwa, int matrix[][3]);
 void draw (int table[]);
 

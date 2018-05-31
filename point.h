@@ -2,7 +2,12 @@
 #define POINT_H
 
 /**
- *  @brief wspolrzene punktu na plaszczyznie
+  * \file point.h
+  * \brief struktura Point
+  */
+
+/**
+ *  @brief wspolrzedne punktu na plaszczyznie
  *  @note pozwala funkcjom na zwrocenie i odcietej i rzednej
  */
 struct Point
