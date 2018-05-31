@@ -3,6 +3,10 @@
 
 #include "point.h"
 
+/**
+ * @brief klasa zawierajaca ulozenie i informacje mozliwe do wyliczenia z niego
+ * @note jest polem klasy Node
+ */
 class Board
 {
 public:

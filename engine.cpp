@@ -1,3 +1,4 @@
+#include "board.h"
 #include "engine.h"
 
 #include <cmath>
@@ -5,10 +6,12 @@
 #include <ctime>
 #include <fstream>
 
-/// \brief odczytuje poczatkowe polozenie z pliku tekstowego
-/// \param nazwa nazwa pliku wraz z rozszerzeniem .txt
-/// \param matrix[][3] tablica do ktorej ma zostac przypisane wejsciowe ulozenie
-/// \return powodzenie lub niepowodzenie pobrania danych z pliku
+/**
+ * @brief czyta poczatkowe ulozenie z pliku
+ * @param nazwa - nazwa pliku tekstowego
+ * @param matrix - tablica do korej zostaja wpisane dane wejsciowe
+ * @return czy udalo sie pobrac dane
+ */
 bool readFromFile(string nazwa, int matrix[][3])
 {
     ifstream input (nazwa);
@@ -23,8 +26,14 @@ bool readFromFile(string nazwa, int matrix[][3])
     return false;
 }
 
-/// \brief Sprawdza czy liczba pojawia sie w tablicy do indexu i
-/// Wykorzystywana w funkcji draw aby sprawdzic czy element zostal juz wylosowany
+/**
+ * @brief Sprawdza czy liczba pojawia sie w tablicy do indexu i
+ * @param drawn - porownywana liczba
+ * @param table - przeszukiwana tablica
+ * @param n - index do ktorego tablica jest przeszukiwana
+ * @return czy znaleziono element w tablicy
+ * @note wykorzystywana w funkcji draw do losowania bez powtorzen
+ */
 bool inside (int drawn, int table[], int n)
 {
     for (int i=0; i<n; i++)
@@ -35,8 +44,11 @@ bool inside (int drawn, int table[], int n)
     return false;
 }
 
-/// \brief losuje tablice z polozeniem poczatkowym
-/// \param table[] tablica do ktorej zostana wylosowane elementy
+/**
+ * @brief losuje poczatkowe polozenie
+ * @param tablica z wylosowanymi elementami
+ * @return tablice przez referencje
+ */
 void draw(int table[])
 {
     int drawn;
@@ -51,12 +63,11 @@ void draw(int table[])
 
 /**
  * @brief solutionIsPosible sprawdza czy dane ulozenie ma rozwiazanie
- * kazde ulozenie ma charakterystyczna liczbe permutacji. Ruchy zmieniaja ja o przysta ilosc. Do rozwiazania da sie doprowadzic tylko poloze ulozen poczatkowych
- * \return ulozenie albo ma rozwiazanie albo go nie ma
+ * @note kazde ulozenie ma charakterystyczna liczbe permutacji. Ruchy zmieniaja ja o przysta ilosc. Do rozwiazania da sie doprowadzic tylko poloze ulozen poczatkowych
+ * @return czy ulozenie ma rozwiazanie
  */
 bool solutionIsPosible(int matrix[][3])
 {
-    ///liczba permutacaji to suma dla kazdej plytki ilosci mniejszych plytek wystepujacych dalej + wiersz w ktorym znajduje sie pusta
     int permutationInversions = 0;
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
@@ -78,7 +89,12 @@ bool solutionIsPosible(int matrix[][3])
     return false;
 }
 
-/// \brief sprawdzaczy zadne cyfry sie nie powtarzaja ani nie wystepuja niedozwolone znaki
+///
+/**
+ * @brief sprawdza czy zadne cyfry sie nie powtarzaja ani nie wystepuja niedozwolone znaki
+ * @param matrix - sprawdzana tablica
+ * @return czy dane sa poprawne
+ */
 bool inRules(int matrix[][3])
 {
     bool seen[9];
@@ -92,7 +108,13 @@ bool inRules(int matrix[][3])
     return true;
 }
 
-/// \brief kopiuje element do listy elementow zamknietych. Towrzy tam NOWY element ktoremu przepisuje wartosci
+/**
+ * @brief kopiuje element do listy elementow zamknietych
+ *
+ * Towrzy tam NOWY element ktoremu przepisuje wartosci
+ * @param closedset - wskaznik do pierwszego elementu listy elementow zamknietych
+ * @param openset - wskaznik do pierwszego elementu listy elementow otwartych
+ */
 void transferToClosedset (Node *&closedset, Node *openset)
 {
     Node *anew = new Node(openset->board);
@@ -101,8 +123,13 @@ void transferToClosedset (Node *&closedset, Node *openset)
     closedset = anew;
 }
 
-/// \brief sprawdza czy element juz jest w danej liscie
-/// przed dodaniem do listy sprawdzam to aby nie storzyc dubla
+/**
+ * @brief sprawdza czy element juz jest wpisany do listy
+ * @param head - wskaznik do pierwszego elemtu listy
+ * @param id - identyfikator po ktorym dane sa porownywane
+ * @return czy znaleziono taki element w liscie
+ * @note moze sie zdarzyc ze drugi raz innym sposobem znajde to samo ulozenie. Nie chce dodac dubla
+ */
 bool alreadyInside (Node *head, int id)
 {
     while (head != nullptr)
@@ -114,7 +141,12 @@ bool alreadyInside (Node *head, int id)
     return false;
 }
 
-/// \brief wykorzystywane do tworzenia nowego wezla, gdy szukam miejsca w ktorym go umiescic sortujac po fullDistance
+/**
+ * @brief znajduje miejsce w liscie do umieszczenia wezla
+ * @param fresh - nowy element
+ * @param looking - porownywany element
+ * @return wstawic nowy element za porownywany czy szukac dalej
+ */
 bool insertHere (Node *fresh, Node *looking)
 {
     if (looking->next == nullptr)
@@ -125,14 +157,14 @@ bool insertHere (Node *fresh, Node *looking)
 }
 
 /**
- * @brief insertNode to insert node
- * @param openset to openset
- * @param parent to parent
- * @param environment to environment
+ * @brief tworzy nowy wezel do dodania do listy elementow otwartych
+ * @param openset - pierwszy element listy elementow otwartych
+ * @param parent - element z ktorego powstal aktualny
+ * @param board - klasa z ulozeniem, jego id i przewidywana odlegloscia
  */
-void insertNode (Node *openset, Node *parent, Board environment)
+void insertNode (Node *openset, Node *parent, Board board)
 {
-    Node *fresh = new Node(environment, parent);
+    Node *fresh = new Node(board, parent);
     Node *looking = openset;
     while (!insertHere(fresh, looking))
         looking = looking->next;
@@ -140,14 +172,26 @@ void insertNode (Node *openset, Node *parent, Board environment)
     looking->next = fresh;
 }
 
-//Umieszcza nowe elementy na liscie dostepnych mozliwosci
+/**
+ * @brief Umieszcza nowy element na liscie elementow otwartych
+ * @param openset - wskaznik na pierwszy element listy elementow otwartych
+ * @param closedset - wskaznik na pierwszy element listy elementow zamknietych
+ * @param luka - wspolzedne pustej plytki
+ * @param obok_y - rzedna plytki obok pustej
+ * @param obok_x - odcieta plytki obok pustej
+ */
 void moveMaker(Node *openset, Node *closedset, Point luka, int obok_y, int obok_x)
 {
-    Board environment = openset->board.clone(luka, obok_y, obok_x);
-    if (!(alreadyInside(openset, environment.getId()) || alreadyInside(closedset, environment.getId())))
-        insertNode(openset, closedset, environment);
+    Board board = openset->board.clone(luka, obok_y, obok_x);
+    if (!(alreadyInside(openset, board.getId()) || alreadyInside(closedset, board.getId())))
+        insertNode(openset, closedset, board);
 }
 
+/**
+ * @brief tworzy liste z kolejnymi ulozeniami rozwiazania
+ * @param openset - pierwszy element listy elementow otwartych - tutaj juz ten z rozwiazaniem
+ * @return wskaznik do pierwszego elementu listy z kolejnymi krokami rozwiazania
+ */
 Node *reconstructPath (Node *openset)
 {
     Node *head = new Node(openset->board);
@@ -164,6 +208,10 @@ Node *reconstructPath (Node *openset)
     return head;
 }
 
+/**
+ * @brief zwalnia pamiec zarezerwowana na liste
+ * @param wskaznik do pierwszego elemntu listy
+ */
 void extermination (Node *&head)
 {
     Node *topic = head;

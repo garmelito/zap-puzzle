@@ -1,2 +1,4 @@
 *.pro.user
-/doc/*
+Doxyfile
+doc/*
+!doc/html/index.html
