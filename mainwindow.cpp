@@ -38,7 +38,7 @@ void MainWindow::on_pb_initialization_clicked()
     ui->pb_initialization->setEnabled(false);
     ui->pb_zapiszDoPliku->setEnabled(true);
 
-    QTimer *timer = new QTimer(this);
+    timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_pb_nextMove_clicked()));
     timer->start(400);
 }
@@ -66,6 +66,8 @@ void MainWindow::on_pb_nextMove_clicked()
         repaint();
         current = current->next;
     }
+    else
+        timer->stop();
 }
 
 /**

@@ -46,6 +46,7 @@ private:
     Node* current;              ///<aktualnie wyswietlany element
     int initialMatrix[3][3];    ///<tablica na dane wejsciowe
     bool firstDraw;             ///<czy to pierwsze losowanie
+    QTimer *timer;
 };
 
 
