@@ -76,6 +76,18 @@ void MainWindow::on_pb_nextMove_clicked()
 void MainWindow::on_pb_wybierzPlik_clicked()
 {
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
+
+    ui->lineEdit->setText(intToQstring(initialMatrix[0][0]));
+    ui->lineEdit_2->setText(intToQstring(initialMatrix[0][1]));
+    ui->lineEdit_3->setText(intToQstring(initialMatrix[0][2]));
+    ui->lineEdit_4->setText(intToQstring(initialMatrix[1][0]));
+    ui->lineEdit_5->setText(intToQstring(initialMatrix[1][1]));
+    ui->lineEdit_6->setText(intToQstring(initialMatrix[1][2]));
+    ui->lineEdit_7->setText(intToQstring(initialMatrix[2][0]));
+    ui->lineEdit_8->setText(intToQstring(initialMatrix[2][1]));
+    ui->lineEdit_9->setText(intToQstring(initialMatrix[2][2]));
+    repaint();
+
     if (!succes)
     {
         ui->tb_komunikaty->setText(stringToQString("Nie znalazlem pliku \n"));
