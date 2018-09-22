@@ -41,6 +41,7 @@ private:
     int QStringToInt (QString text);
     QString stringToQString (string text);
     void dataCheck ();
+    void initialMatrixToLineEdits();
 
     Node* start;                ///<glowa listy z rozwiazaniem
     Node* current;              ///<aktualnie wyswietlany element

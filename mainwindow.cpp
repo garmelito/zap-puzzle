@@ -77,16 +77,7 @@ void MainWindow::on_pb_wybierzPlik_clicked()
 {
     bool succes = readFromFile (ui->le_nazwaPliku->text().toStdString(), initialMatrix);
 
-    ui->lineEdit->setText(intToQstring(initialMatrix[0][0]));
-    ui->lineEdit_2->setText(intToQstring(initialMatrix[0][1]));
-    ui->lineEdit_3->setText(intToQstring(initialMatrix[0][2]));
-    ui->lineEdit_4->setText(intToQstring(initialMatrix[1][0]));
-    ui->lineEdit_5->setText(intToQstring(initialMatrix[1][1]));
-    ui->lineEdit_6->setText(intToQstring(initialMatrix[1][2]));
-    ui->lineEdit_7->setText(intToQstring(initialMatrix[2][0]));
-    ui->lineEdit_8->setText(intToQstring(initialMatrix[2][1]));
-    ui->lineEdit_9->setText(intToQstring(initialMatrix[2][2]));
-    repaint();
+    initialMatrixToLineEdits();
 
     if (!succes)
     {
@@ -137,18 +128,9 @@ void MainWindow::on_pb_losuj_clicked()
                 initialMatrix[i][j] = table[i*3+j];
     }while (!solutionIsPosible(initialMatrix));
 
-    ui->lineEdit->setText(intToQstring(table[0]));
-    ui->lineEdit_2->setText(intToQstring(table[1]));
-    ui->lineEdit_3->setText(intToQstring(table[2]));
-    ui->lineEdit_4->setText(intToQstring(table[3]));
-    ui->lineEdit_5->setText(intToQstring(table[4]));
-    ui->lineEdit_6->setText(intToQstring(table[5]));
-    ui->lineEdit_7->setText(intToQstring(table[6]));
-    ui->lineEdit_8->setText(intToQstring(table[7]));
-    ui->lineEdit_9->setText(intToQstring(table[8]));
-    repaint();
+    initialMatrixToLineEdits();
 
-    on_pb_wybierzDane_clicked();
+    ui->pb_initialization->setEnabled(true);
 }
 
 /**
@@ -231,4 +213,18 @@ void MainWindow::dataCheck()
         ui->tb_komunikaty->setText(stringToQString("Dane sa w porzadku \n"));
         ui->pb_initialization->setEnabled(true);
     }
+}
+
+void MainWindow::initialMatrixToLineEdits()
+{
+    ui->lineEdit->setText(intToQstring(initialMatrix[0][0]));
+    ui->lineEdit_2->setText(intToQstring(initialMatrix[0][1]));
+    ui->lineEdit_3->setText(intToQstring(initialMatrix[0][2]));
+    ui->lineEdit_4->setText(intToQstring(initialMatrix[1][0]));
+    ui->lineEdit_5->setText(intToQstring(initialMatrix[1][1]));
+    ui->lineEdit_6->setText(intToQstring(initialMatrix[1][2]));
+    ui->lineEdit_7->setText(intToQstring(initialMatrix[2][0]));
+    ui->lineEdit_8->setText(intToQstring(initialMatrix[2][1]));
+    ui->lineEdit_9->setText(intToQstring(initialMatrix[2][2]));
+    repaint();
 }
